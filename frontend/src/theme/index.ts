@@ -2,14 +2,14 @@ import { createGlobalStyle, DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
 	colors: {
-		main: "#261b2b",
-		secondary: "",
+		main: '#261b2b',
+		secondary: '',
 
-		link: "#fff",
-		linkBackground: "#261b2b",
-		linkBackgroundActive: "#44324d",
+		link: '#fff',
+		linkBackground: '#261b2b',
+		linkBackgroundActive: '#44324d',
 
-		background: "#261b2b"
+		background: '#261b2b'
 	}
 };
 
@@ -29,13 +29,13 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 const size = {
-	mobileS: "320px",
-	mobileM: "375px",
-	mobileL: "425px",
-	tablet: "768px",
-	laptop: "1024px",
-	laptopL: "1440px",
-	desktop: "2560px"
+	mobileS: '320px',
+	mobileM: '375px',
+	mobileL: '425px',
+	tablet: '768px',
+	laptop: '1024px',
+	laptopL: '1440px',
+	desktop: '2560px'
 };
 
 export const device = {

@@ -10,7 +10,7 @@ enum DBConnectionStatus {
 	Disconnected = 0,
 	Connecting,
 	Connected,
-	Reconnecting,
+	Reconnecting
 }
 
 interface KeppConConfig {
@@ -23,15 +23,15 @@ const DEFAULT_KEPPCON_CONFIG: KeppConConfig = {
 	connectionOptions: {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		useFindAndModify: true,
-	},
+		useFindAndModify: true
+	}
 };
 
 /**
  * MongoDB wrapper.
  */
 export class KeppCon {
-	public readonly logger = createLogger("db");
+	public readonly logger = createLogger('db');
 	public readonly config = DEFAULT_KEPPCON_CONFIG;
 	public connectionStatus = DBConnectionStatus.Disconnected;
 
@@ -39,12 +39,12 @@ export class KeppCon {
 
 	constructor(
 		readonly global: KeppAPI,
-		config: Partial<KeppConConfig> = DEFAULT_KEPPCON_CONFIG,
+		config: Partial<KeppConConfig> = DEFAULT_KEPPCON_CONFIG
 	) {
 		this.config = { ...DEFAULT_KEPPCON_CONFIG, ...config };
 
 		this.logger.debug(
-			`Mongoose v${mongoose.version} - will connect to ${this.config.dbUri}`,
+			`Mongoose v${mongoose.version} - will connect to ${this.config.dbUri}`
 		);
 	}
 	/**
@@ -96,7 +96,7 @@ export class KeppCon {
 
 		// Fetch the missing guilds from the database.
 		const fetchedGuilds = await GuildModel.find({
-			_id: { $in: guildsNeedFetching },
+			_id: { $in: guildsNeedFetching }
 		});
 
 		// Concat fetched guilds with cached guild ids, cache fetched guilds.
@@ -104,7 +104,7 @@ export class KeppCon {
 			fetchedGuilds.map((v) => {
 				this._cacheGuild(v);
 				return v.id;
-			}),
+			})
 		);
 	}
 
@@ -141,27 +141,24 @@ export class KeppCon {
 	 */
 	private async _tryConnection(attemptsRemaining = 5): Promise<true> {
 		this.logger.debug(
-			`Making connection attempt - ${attemptsRemaining} remaining...`,
+			`Making connection attempt - ${attemptsRemaining} remaining...`
 		);
 
 		try {
 			await mongoose.connect(env.DB_URI, this.config.connectionOptions);
 			this.connectionStatus = DBConnectionStatus.Connected;
 
-			this.logger.info("Connected to MongoDB.");
+			this.logger.info('Connected to MongoDB.');
 
 			return true;
 		} catch (err) {
-			this.logger.warn(
-				"Could not connect to MongoDB: (full stack below)",
-				err,
-			);
+			this.logger.warn('Could not connect to MongoDB: (full stack below)', err);
 			attemptsRemaining--;
 			console.error(err);
 		}
 
 		if (attemptsRemaining == 0) {
-			throw Error("Could not connect to MongoDB.");
+			throw Error('Could not connect to MongoDB.');
 		}
 
 		return this._tryConnection(attemptsRemaining);

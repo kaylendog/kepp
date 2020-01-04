@@ -24,12 +24,12 @@ interface SchemaValidation<T> {
  */
 export const validateObject = <T extends any>(
 	schema: T,
-	obj: { [x: string]: any },
+	obj: { [x: string]: any }
 ): SchemaValidation<T> => {
 	let validation: SchemaValidation<T> = {
 		missingEntries: [],
 		invalidTypes: [],
-		valid: true,
+		valid: true
 	};
 
 	Object.entries(schema).forEach((entry) => {
@@ -37,7 +37,7 @@ export const validateObject = <T extends any>(
 			validation.invalidTypes.push(entry[0]);
 		}
 
-		if (typeof obj[entry[0]] == "undefined") {
+		if (typeof obj[entry[0]] == 'undefined') {
 			validation.missingEntries.push(entry[0]);
 		}
 

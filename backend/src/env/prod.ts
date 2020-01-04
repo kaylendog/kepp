@@ -6,10 +6,10 @@ export const prod = withDefaults({
 	WRITE_PERMISSION_LEVEL: Number(process.env.WRITE_PERMISSION_LEVEL),
 	READ_PERMISSION_LEVEL: Number(process.env.READ_PERMISSION_LEVEL),
 
-	DB_URI: `${process.env.ENABLE_SRV ? "mongodb+srv" : "mongodb"}://${
+	DB_URI: `${process.env.ENABLE_SRV ? 'mongodb+srv' : 'mongodb'}://${
 		process.env.DB_USER && process.env.DB_PASS
 			? `${process.env.DB_USER}:${process.env.DB_PASS}@`
-			: ""
+			: ''
 	}${process.env.MONGO_URI}`,
 
 	BACKEND_PORT: Number(process.env.BACKEND_PORT),
@@ -17,5 +17,5 @@ export const prod = withDefaults({
 	CLIENT_ID: process.env.CLIENT_ID,
 	CLIENT_SECRET: process.env.CLIENT_SECRET,
 	REDIRECT_URI: process.env.REDIRECT_URI,
-	SCOPE: process.env.SCOPE,
+	SCOPE: process.env.SCOPE
 });

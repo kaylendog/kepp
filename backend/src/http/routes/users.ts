@@ -8,10 +8,10 @@ import { fetchToken, requireAuthentication } from "../util/auth";
 import { Route } from "./";
 
 export const users: Route = {
-	method: "use",
-	path: "/users",
+	method: 'use',
+	path: '/users',
 	handler: () =>
-		Router().get("/@me", requireAuthentication, async (req, res) => {
+		Router().get('/@me', requireAuthentication, async (req, res) => {
 			const token = fetchToken(req);
 			if (!token) {
 				return ServersideError(res);
@@ -30,5 +30,5 @@ export const users: Route = {
 			}
 
 			return res.json(removeFields(user));
-		}),
+		})
 };

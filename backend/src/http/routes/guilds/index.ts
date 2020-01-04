@@ -13,11 +13,11 @@ import { permissionsHandler } from "./permissions";
  * @param server
  */
 export const guilds: Route = {
-	path: "/guilds",
-	method: "use",
+	path: '/guilds',
+	method: 'use',
 	handler: (server) =>
 		Router()
-			.get("/@me", requireAuthentication, async (req, res) => {
+			.get('/@me', requireAuthentication, async (req, res) => {
 				const user = await fetchUser(req, res);
 				if (!user) {
 					return Errors.Unauthorized(res);
@@ -25,7 +25,7 @@ export const guilds: Route = {
 
 				res.json(user.guilds);
 			})
-			.get("/:id", requireAuthentication, async (req, res) => {
+			.get('/:id', requireAuthentication, async (req, res) => {
 				const guildID = req.params.id;
 
 				if (!guildID) {
@@ -43,35 +43,27 @@ export const guilds: Route = {
 				const guild = await GuildModel.findById(guildID);
 				return res.json(guild);
 			})
-			.get(
-				"/:id/infractions",
-				requireAuthentication,
-				async (req, res) => {
-					if (!req.param("id")) {
-						return Errors.BadRequest(res);
-					}
+			.get('/:id/infractions', requireAuthentication, async (req, res) => {
+				if (!req.param('id')) {
+					return Errors.BadRequest(res);
+				}
 
-					const user = await fetchUser(req, res);
-					if (!user) {
-						return Errors.ServersideError(res);
-					}
+				const user = await fetchUser(req, res);
+				if (!user) {
+					return Errors.ServersideError(res);
+				}
 
-					if (
-						user.guilds.filter(
-							(guild) => guild.id === req.param("id"),
-						).length < 1
-					) {
-						return Errors.Unauthorized(res);
-					}
+				if (
+					user.guilds.filter((guild) => guild.id === req.param('id')).length < 1
+				) {
+					return Errors.Unauthorized(res);
+				}
 
-					const infractions = await InfractionModel.find({
-						guild_id: req.param("id"),
-					});
+				const infractions = await InfractionModel.find({
+					guild_id: req.param('id')
+				});
 
-					return res.json(
-						infractions.map((inf) => removeFields(inf)),
-					);
-				},
-			)
-			.use(permissionsHandler.handler(server)),
+				return res.json(infractions.map((inf) => removeFields(inf)));
+			})
+			.use(permissionsHandler.handler(server))
 };

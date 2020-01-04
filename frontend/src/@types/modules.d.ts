@@ -1,19 +1,19 @@
-declare module "*.png" {
+declare module '*.png' {
 	const value: any;
 	export default value;
 }
 
-declare module "*.svg" {
+declare module '*.svg' {
 	const value: any;
 	export default value;
 }
 
-declare module "*.jgp" {
+declare module '*.jgp' {
 	const value: any;
 	export default value;
 }
 
-declare module "*.jpeg" {
+declare module '*.jpeg' {
 	const value: any;
 	export default value;
 }

@@ -10,19 +10,19 @@ import { requireAuthentication } from "../../util/auth";
 
 const PermissionUpdateSchema = {
 	level: Number,
-	member: String,
+	member: String
 };
 
 export const permissionsHandler: Route = {
-	method: "use",
-	path: "/:id/permissions",
+	method: 'use',
+	path: '/:id/permissions',
 	handler: (server: FoxServer) =>
 		express
 			.Router()
-			.get("/", requireAuthentication, (req, res) => {
+			.get('/', requireAuthentication, (req, res) => {
 				res.json({});
 			})
-			.put("/", (req, res) => {
+			.put('/', (req, res) => {
 				if (validateObject(PermissionUpdateSchema, req.body)) {
 					return BadRequest(res);
 				}
@@ -30,15 +30,15 @@ export const permissionsHandler: Route = {
 				const d = {
 					member: req.body.member,
 					guild: req.params.id,
-					level: req.body.level,
+					level: req.body.level
 				};
 
 				server.global.ws.sendBotEvent({
 					op: OutgoingEvents.DISPATCH,
 					t: DispatchEvents.UpdatePermission,
-					d,
+					d
 				});
 
 				return res.json(d);
-			}),
+			})
 };

@@ -16,14 +16,14 @@ interface FoxServerConfig {
 }
 
 const DEFAULT_SERVER_CONFIG: FoxServerConfig = {
-	port: env.BACKEND_PORT,
+	port: env.BACKEND_PORT
 };
 
 /**
  * Basic wrapper around an express server.
  */
 export class FoxServer {
-	public readonly logger = new Logger("http");
+	public readonly logger = new Logger('http');
 	public readonly config: FoxServerConfig = DEFAULT_SERVER_CONFIG;
 
 	public readonly express: express.Application = express();
@@ -31,7 +31,7 @@ export class FoxServer {
 
 	constructor(
 		readonly global: KeppAPI,
-		config: Partial<FoxServerConfig> = DEFAULT_SERVER_CONFIG,
+		config: Partial<FoxServerConfig> = DEFAULT_SERVER_CONFIG
 	) {
 		this.config = { ...DEFAULT_SERVER_CONFIG, ...config };
 
@@ -40,17 +40,17 @@ export class FoxServer {
 			.use(cors())
 			.use(bodyParser.json())
 			.use(
-				morgan("dev", {
-					stream: { write: (msg) => this.logger.debug(msg) },
-				}),
+				morgan('dev', {
+					stream: { write: (msg) => this.logger.debug(msg) }
+				})
 			);
 
 		// HTTP event handlers
 		this.http
-			.on("error", (err) => this.logger.error(err))
-			.on("close", () => this.logger.warn("HTTP server closed."))
-			.on("listening", () =>
-				this.logger.info("FoxServer listening on", this.config.port),
+			.on('error', (err) => this.logger.error(err))
+			.on('close', () => this.logger.warn('HTTP server closed.'))
+			.on('listening', () =>
+				this.logger.info('FoxServer listening on', this.config.port)
 			);
 
 		this.registerRoutes();
@@ -62,19 +62,19 @@ export class FoxServer {
 	registerRoutes() {
 		routes.forEach((route) => {
 			this.logger.debug(
-				"Register route:",
+				'Register route:',
 				route.method.toUpperCase(),
-				route.path,
+				route.path
 			);
 			this.express[route.method](route.path, route.handler(this));
 		});
 
 		this.express
-			.all("/", (req, res) =>
+			.all('/', (req, res) =>
 				res.json({
-					v: require("../../package.json").version,
-					uptime: Math.floor(process.uptime()),
-				}),
+					v: require('../../package.json').version,
+					uptime: Math.floor(process.uptime())
+				})
 			)
 			.use((req, res) => Errors.NotFound(res));
 	}

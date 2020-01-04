@@ -16,7 +16,7 @@ export const hasRequiredPermission = () => {};
  */
 export const hasGuildWritePermission = async (
 	guildID: string,
-	userID: string,
+	userID: string
 ) => {
 	const config = await GuildModel.findById(guildID);
 	if (!config) {
@@ -51,7 +51,7 @@ export const hasGuildWritePermission = async (
  */
 export const hasGuildReadPermission = async (
 	guildID: string,
-	userID: string,
+	userID: string
 ) => {
 	const config = await GuildModel.findById(guildID);
 	if (!config) {
@@ -83,8 +83,8 @@ export const hasGuildReadPermission = async (
 
 export const getAccessType = async (
 	guildID: string,
-	userID: string,
-): Promise<"read" | "write" | null> => {
+	userID: string
+): Promise<'read' | 'write' | null> => {
 	const config = await GuildModel.findById(guildID);
 
 	return null;

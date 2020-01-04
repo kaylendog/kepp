@@ -1,27 +1,27 @@
 import colors from "colors/safe";
 
-type LogLevel = "info" | "warning" | "error" | "debug";
+type LogLevel = 'info' | 'warning' | 'error' | 'debug';
 
 export class Logger {
 	constructor(readonly name: string) {}
 
 	public info(...msg: any[]): this {
-		this.log("info", ...msg);
+		this.log('info', ...msg);
 		return this;
 	}
 
 	public warn(...msg: any[]): this {
-		this.log("warning", ...msg);
+		this.log('warning', ...msg);
 		return this;
 	}
 
 	public error(...msg: any[]): this {
-		this.log("error", ...msg);
+		this.log('error', ...msg);
 		return this;
 	}
 
 	public debug(...msg: any[]): this {
-		this.log("debug", ...msg);
+		this.log('debug', ...msg);
 		return this;
 	}
 
@@ -33,8 +33,8 @@ export class Logger {
 	private log(level: LogLevel, ...content: any[]): void {
 		return console.log(
 			`${colors.gray(Logger.getTimestamp())} ${colors.white(
-				"["
-			)}${this.getLoggerPrefix(level)}${colors.white("]")}`,
+				'['
+			)}${this.getLoggerPrefix(level)}${colors.white(']')}`,
 			...content
 		);
 	}
@@ -51,29 +51,27 @@ export class Logger {
 	}
 
 	static levelPrefixes = {
-		warning: "WARNING ",
-		error: "ERROR ",
-		info: "",
-		debug: "Debug ",
+		warning: 'WARNING ',
+		error: 'ERROR ',
+		info: '',
+		debug: 'Debug '
 	};
 
 	/**
 	 * Get the appropriate coloring function.
 	 */
-	static getColorFunction = (
-		level: LogLevel
-	): ((string: string) => string) => {
+	static getColorFunction = (level: LogLevel): ((string: string) => string) => {
 		switch (level) {
-			case "debug": {
+			case 'debug': {
 				return colors.blue;
 			}
-			case "info": {
+			case 'info': {
 				return colors.cyan;
 			}
-			case "error": {
+			case 'error': {
 				return colors.red;
 			}
-			case "warning": {
+			case 'warning': {
 				return colors.yellow;
 			}
 		}
@@ -85,7 +83,7 @@ export class Logger {
 	static getTimestamp(): string {
 		return new Date()
 			.toISOString()
-			.split("T")[1]
+			.split('T')[1]
 			.slice(0, -1);
 	}
 }

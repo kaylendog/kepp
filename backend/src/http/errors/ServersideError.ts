@@ -4,11 +4,11 @@ import { ServerErrorCreator } from "./ServerError";
 
 export const ServersideError: ServerErrorCreator = (
 	res: Response,
-	details?: string,
+	details?: string
 ) =>
 	res.status(500).json({
 		code: 4,
-		msg: "500: Server Error",
+		msg: '500: Server Error',
 
-		details,
+		details
 	});

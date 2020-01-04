@@ -7,5 +7,5 @@ export const HELLO: OutgoingEventCreator<{}> = {
 	op: OutgoingEvents.HELLO,
 	handler: (socket) => {
 		socket.send({ op: OutgoingEvents.HELLO, d: {} });
-	},
+	}
 };

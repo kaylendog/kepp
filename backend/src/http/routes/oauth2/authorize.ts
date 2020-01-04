@@ -15,39 +15,36 @@ import { ACTIVE_AUTH_TICKETS } from "./";
 
 export const authorizeHandler = (server: FoxServer) => async (
 	req: express.Request,
-	res: express.Response,
+	res: express.Response
 ) => {
 	await Promise.resolve();
 
 	if (!validateObject(OAuth2ConfigSchema, OAuth2Config).valid) {
 		server.logger.warn(
-			'[oauth2] OAuth is currently unconfigured, or is configured incorrectly. Please configure it in ".env".',
+			'[oauth2] OAuth is currently unconfigured, or is configured incorrectly. Please configure it in ".env".'
 		);
-		return ServersideError(res, "OAuth2 unconfigured.");
+		return ServersideError(res, 'OAuth2 unconfigured.');
 	}
 
 	server.logger.debug(
-		`[oauth2][authorize] Attempting to auth '${JSON.stringify(req.body)}'`,
+		`[oauth2][authorize] Attempting to auth '${JSON.stringify(req.body)}'`
 	);
 
 	if (ACTIVE_AUTH_TICKETS.indexOf(req.body.state) === -1) {
 		server.logger.debug(
-			`[oauth2][authorize][${req.body.state}] Invalid ticket for authorization request - denying...`,
+			`[oauth2][authorize][${req.body.state}] Invalid ticket for authorization request - denying...`
 		);
-		return BadRequest(
-			res,
-			"Invalid authorization ticket. Please try again.",
-		);
+		return BadRequest(res, 'Invalid authorization ticket. Please try again.');
 	}
 
 	ACTIVE_AUTH_TICKETS.splice(ACTIVE_AUTH_TICKETS.indexOf(req.body.state), 1);
 
 	if (!req.body.code) {
-		return BadRequest(res, "No authorization code provided.");
+		return BadRequest(res, 'No authorization code provided.');
 	}
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Exchanging code "${req.body.code}" with Discord...`,
+		`[oauth2][authorize][${req.body.state}] Exchanging code "${req.body.code}" with Discord...`
 	);
 
 	let response: AxiosResponse<any> | undefined;
@@ -55,24 +52,24 @@ export const authorizeHandler = (server: FoxServer) => async (
 	// Obtain access token from discord
 	try {
 		response = await Axios.post(
-			"https://discordapp.com/api/oauth2/token",
+			'https://discordapp.com/api/oauth2/token',
 			qs.stringify({
 				...OAuth2Config,
 				code: req.body.code,
-				grant_type: "authorization_code",
+				grant_type: 'authorization_code'
 			}),
 			{
 				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-			},
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			}
 		);
 	} catch (err) {
 		console.error(err);
 		return ServersideError(res);
 	}
 	if (!response || !response.data.access_token) {
-		return BadRequest(res, "Invalid response from Discord.");
+		return BadRequest(res, 'Invalid response from Discord.');
 	}
 
 	/**
@@ -81,15 +78,15 @@ export const authorizeHandler = (server: FoxServer) => async (
 	const tokenData = {
 		access_token: response.data.access_token,
 		expires_in: response.data.expires_in,
-		refresh_token: response.data.refresh_token,
+		refresh_token: response.data.refresh_token
 	};
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Token received. Updating database...`,
+		`[oauth2][authorize][${req.body.state}] Token received. Updating database...`
 	);
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Requesting user object from Discord...`,
+		`[oauth2][authorize][${req.body.state}] Requesting user object from Discord...`
 	);
 
 	// Fetch user data
@@ -101,16 +98,16 @@ export const authorizeHandler = (server: FoxServer) => async (
 	}>(tokenData.access_token);
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Saving to database...`,
+		`[oauth2][authorize][${req.body.state}] Saving to database...`
 	);
 
 	// Send the end-user their access token
 
 	const token = jwt.sign(
 		{
-			access_token: response.data.access_token,
+			access_token: response.data.access_token
 		},
-		OAuth2Config.client_secret,
+		OAuth2Config.client_secret
 	);
 
 	// Update client user document
@@ -124,17 +121,17 @@ export const authorizeHandler = (server: FoxServer) => async (
 
 			expires_at: Date.now() + tokenData.expires_in,
 
-			token,
+			token
 		},
-		{ upsert: true },
+		{ upsert: true }
 	);
 
 	res.json({
-		token,
+		token
 	});
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Done. Fetching user guilds...`,
+		`[oauth2][authorize][${req.body.state}] Done. Fetching user guilds...`
 	);
 
 	const userGuilds = await fetchCurrentUserGuilds<
@@ -144,7 +141,7 @@ export const authorizeHandler = (server: FoxServer) => async (
 	>(tokenData.access_token);
 
 	const guilds = userGuilds.filter((guild: { permissions: number }) =>
-		new Discord.Permissions(guild.permissions).has("MANAGE_GUILD", true),
+		new Discord.Permissions(guild.permissions).has('MANAGE_GUILD', true)
 	);
 
 	// Update user document
@@ -156,21 +153,19 @@ export const authorizeHandler = (server: FoxServer) => async (
 			avatar: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`,
 			tag: `${user.username}#${user.discriminator}`,
 
-			guilds,
+			guilds
 		},
 		{
-			upsert: true,
-		},
+			upsert: true
+		}
 	);
 
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Updated user in database.`,
+		`[oauth2][authorize][${req.body.state}] Updated user in database.`
 	);
 	server.logger.debug(
-		`[oauth2][authorize][${req.body.state}] Login flow complete.`,
+		`[oauth2][authorize][${req.body.state}] Login flow complete.`
 	);
 
-	server.logger.info(
-		`[oauth][authorize] User ID '${user.id}' authenticated.`,
-	);
+	server.logger.info(`[oauth][authorize] User ID '${user.id}' authenticated.`);
 };

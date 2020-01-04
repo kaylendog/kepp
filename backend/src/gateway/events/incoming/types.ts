@@ -3,7 +3,7 @@ import { DispatchEvents } from "../dispatch";
 
 export enum IncomingEvents {
 	IDENTIFY = 2,
-	HEARTBEAT = 1,
+	HEARTBEAT = 1
 }
 
 /**

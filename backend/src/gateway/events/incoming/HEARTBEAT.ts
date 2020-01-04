@@ -8,5 +8,5 @@ export const HEARTBEAT: IncomingSocketHandler<{}> = {
 	op: IncomingEvents.HEARTBEAT,
 	handler: (socket) => {
 		return socket.fire(OutgoingEvents.HEARTBEAT_ACK, {});
-	},
+	}
 };

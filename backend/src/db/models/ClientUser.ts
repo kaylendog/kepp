@@ -18,13 +18,13 @@ const ClientUserSchema: Schema = new Schema(
 		expires_at: { type: String, required: true },
 		refresh_token: { type: String },
 
-		token: { type: String, required: true },
+		token: { type: String, required: true }
 	},
-	{ versionKey: false },
+	{ versionKey: false }
 );
 
 // Export the model and return your ClientUser interface
 export const ClientUserModel = model<ClientUser>(
-	"ClientUser",
-	ClientUserSchema,
+	'ClientUser',
+	ClientUserSchema
 );

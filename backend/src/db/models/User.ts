@@ -14,7 +14,7 @@ export interface User extends Document {
 			name: string;
 			owner: boolean;
 			permissions: number;
-		},
+		}
 	];
 }
 
@@ -25,10 +25,10 @@ const UserSchema: Schema = new Schema(
 		avatar: { type: String, required: true },
 		tag: { type: String, required: true },
 
-		guilds: [{}],
+		guilds: [{}]
 	},
-	{ versionKey: false },
+	{ versionKey: false }
 );
 
 // Export the model and return your User interface
-export const UserModel = model<User>("User", UserSchema);
+export const UserModel = model<User>('User', UserSchema);

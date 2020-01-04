@@ -7,7 +7,7 @@ import { users } from "./users";
 
 export interface Route {
 	path: string;
-	method: "get" | "post" | "use";
+	method: 'get' | 'post' | 'use';
 	handler: (server: FoxServer) => RequestHandler;
 }
 

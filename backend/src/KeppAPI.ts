@@ -9,24 +9,24 @@ import { createLogger } from "./util/logging";
 /**
  * Get the current commit hash.
  */
-const getHash = (slice = 7) => execSync("git rev-parse HEAD").slice(0, slice);
+const getHash = (slice = 7) => execSync('git rev-parse HEAD').slice(0, slice);
 
 /**
  * Wrapper class for the HTTP and WS servers.
  */
 export class KeppAPI {
-	public logger = createLogger("global");
+	public logger = createLogger('global');
 
 	public http: FoxServer;
 	public ws: SnepServer;
 	public db: KeppCon;
 
 	constructor() {
-		console.log(`\n${colors.rainbow("KeppAPI")} (sha:${getHash()})`);
+		console.log(`\n${colors.rainbow('KeppAPI')} (sha:${getHash()})`);
 		console.log(
 			`Package version: v${
-				require("../package.json").version
-			}, NODE_ENV=${process.env.NODE_ENV || "development"}\n`,
+				require('../package.json').version
+			}, NODE_ENV=${process.env.NODE_ENV || 'development'}\n`
 		);
 
 		this.http = new FoxServer(this);

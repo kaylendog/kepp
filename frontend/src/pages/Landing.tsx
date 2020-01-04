@@ -28,8 +28,8 @@ export const Landing = () => (
 		<Splash>
 			<Heading>A really over-engineered furry Discord bot.</Heading>
 			<SubHeading>
-				I don't know why I put this much effort into making this. It
-				does everything I could think of.
+				I don't know why I put this much effort into making this. It does
+				everything I could think of.
 			</SubHeading>
 			<a href="https://discordapp.com/">
 				<Button>Add to server</Button>

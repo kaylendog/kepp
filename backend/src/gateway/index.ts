@@ -12,7 +12,7 @@ interface FoxServerConfig {
 }
 
 const DEFAULT_SERVER_CONFIG: FoxServerConfig = {
-	port: env.WS_PORT,
+	port: env.WS_PORT
 };
 
 /**
@@ -20,7 +20,7 @@ const DEFAULT_SERVER_CONFIG: FoxServerConfig = {
  */
 export class SnepServer {
 	readonly config = DEFAULT_SERVER_CONFIG;
-	readonly logger = createLogger("ws");
+	readonly logger = createLogger('ws');
 	readonly wss: WebSocket.Server;
 
 	public connections: Map<string, Socket> = new Map();
@@ -28,15 +28,15 @@ export class SnepServer {
 
 	constructor(
 		readonly global: KeppAPI,
-		config: Partial<FoxServerConfig> = DEFAULT_SERVER_CONFIG,
+		config: Partial<FoxServerConfig> = DEFAULT_SERVER_CONFIG
 	) {
 		this.config = { ...DEFAULT_SERVER_CONFIG, ...config };
 		this.wss = new WebSocket.Server({ port: this.config.port })
-			.on("listening", () => {
-				this.logger.info("SnepServer listening on", this.config.port);
+			.on('listening', () => {
+				this.logger.info('SnepServer listening on', this.config.port);
 			})
-			.on("connection", (ws, con) => this.handleConnection(ws, con))
-			.on("error", (err) => this.logger.error(err));
+			.on('connection', (ws, con) => this.handleConnection(ws, con))
+			.on('error', (err) => this.logger.error(err));
 	}
 
 	/**
@@ -49,9 +49,7 @@ export class SnepServer {
 		this.connections.set(socket.addr, socket);
 
 		// Forget connection on close.
-		socket.on(SocketEvents.Close, () =>
-			this.connections.delete(socket.addr),
-		);
+		socket.on(SocketEvents.Close, () => this.connections.delete(socket.addr));
 	}
 
 	/**

@@ -29,10 +29,10 @@ const GuildSchema: Schema = new Schema(
 		normal_log_channel: { type: String },
 		vc_log_channel: { type: String },
 
-		special_vc: [String],
+		special_vc: [String]
 	},
-	{ versionKey: false },
+	{ versionKey: false }
 );
 
 // Export the model and return your Guild interface
-export const GuildModel = model<Guild>("Guild", GuildSchema);
+export const GuildModel = model<Guild>('Guild', GuildSchema);

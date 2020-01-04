@@ -44,14 +44,14 @@ const InfractionSchema: Schema = new Schema(
 		start_time: { type: Number, required: true },
 		end_time: { type: Number, required: true },
 
-		reason: { type: String, required: true },
+		reason: { type: String, required: true }
 	},
-	{ versionKey: false },
+	{ versionKey: false }
 );
 
 // Export the model and return your Infraction interface
 export const InfractionModel = model<Infraction>(
-	"Infraction",
+	'Infraction',
 	InfractionSchema,
-	"mod_log",
+	'mod_log'
 );

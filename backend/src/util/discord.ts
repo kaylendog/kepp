@@ -7,14 +7,14 @@ import { makeAuthenticatedRequest } from "./requests";
  */
 export const fetchGuildMemberRoles = async (
 	guildID: string,
-	memberID: string,
+	memberID: string
 ): Promise<string[]> => {
 	return JSON.parse(
 		await makeAuthenticatedRequest(
-			"GET",
-			`/guilds/${guildID}/members/${memberID}`,
+			'GET',
+			`/guilds/${guildID}/members/${memberID}`
 		).catch(() => {
-			return "[]";
-		}),
+			return '[]';
+		})
 	);
 };

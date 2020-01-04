@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-	font-family: "Questrial";
+	font-family: 'Questrial';
 	font-size: 24px;
 	margin: 1rem;
 
@@ -23,7 +23,7 @@ export const Button = styled.button`
 `;
 
 export const ButtonLink = styled.a`
-	font-family: "Questrial";
+	font-family: 'Questrial';
 	font-size: 24px;
 	margin: 1rem;
 

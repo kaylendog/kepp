@@ -15,9 +15,9 @@ import { OutgoingEvents, OutgoingSocketMessage } from "./events/outgoing/types";
  * Enum of Socket event names.
  */
 export const enum SocketEvents {
-	Close = "close",
-	Outgoing = "outgoing",
-	Incoming = "incoming",
+	Close = 'close',
+	Outgoing = 'outgoing',
+	Incoming = 'incoming'
 }
 
 /**
@@ -36,35 +36,35 @@ export class Socket extends EventEmitter {
 	constructor(
 		readonly server: SnepServer,
 		readonly ws: WebSocket,
-		readonly incomingMessage: IncomingMessage,
+		readonly incomingMessage: IncomingMessage
 	) {
 		super();
 		this.ws
-			.on("message", (data) => this._handleMsg(data))
-			.on("close", (err) =>
+			.on('message', (data) => this._handleMsg(data))
+			.on('close', (err) =>
 				this.logger.info(
-					`[${this.addr}] Socket closed - ${ErrorCodes[err]} (${err})`,
-				),
+					`[${this.addr}] Socket closed - ${ErrorCodes[err]} (${err})`
+				)
 			);
 
 		this.logger.info(
-			`[${this.addr}] New connection - waiting for authorization request...`,
+			`[${this.addr}] New connection - waiting for authorization request...`
 		);
 
 		this.on(SocketEvents.Outgoing, (ev) =>
 			this.logger.debug(
-				`[${this.addr}][outgoing] ${OutgoingEvents[ev.op]} (${
-					ev.op
-				}) - len: ${JSON.stringify(ev).toString().length}`,
-			),
+				`[${this.addr}][outgoing] ${OutgoingEvents[ev.op]} (${ev.op}) - len: ${
+					JSON.stringify(ev).toString().length
+				}`
+			)
 		);
 
 		this.on(SocketEvents.Incoming, (ev) =>
 			this.logger.debug(
-				`[${this.addr}][incoming] ${IncomingEvents[ev.op]} (${
-					ev.op
-				}) - len: ${JSON.stringify(ev).toString().length}`,
-			),
+				`[${this.addr}][incoming] ${IncomingEvents[ev.op]} (${ev.op}) - len: ${
+					JSON.stringify(ev).toString().length
+				}`
+			)
 		);
 	}
 
@@ -103,7 +103,7 @@ export class Socket extends EventEmitter {
 	fire(op: OutgoingEvents, args: {}) {
 		const handler = OutgoingEventCreators.get(op);
 		if (!handler) {
-			throw Error("Cannot fire event with unrecognised Opcode: " + op);
+			throw Error('Cannot fire event with unrecognised Opcode: ' + op);
 		} else {
 			handler.handler(this, args);
 		}
@@ -125,17 +125,13 @@ export class Socket extends EventEmitter {
 	 */
 	public authorize(isBot = false) {
 		if (this.authorized) {
-			this.logger.warn(
-				`[${this.addr}] Socket already authorized - closing...`,
-			);
+			this.logger.warn(`[${this.addr}] Socket already authorized - closing...`);
 			return this.close(ErrorCodes.ALREAY_AUTHORIZED);
 		}
 
 		this.authorized = true;
 
-		this.logger.info(
-			`[${this.addr}] Socket authorized - informing client...`,
-		);
+		this.logger.info(`[${this.addr}] Socket authorized - informing client...`);
 
 		if (isBot) {
 			this.logger.info(`[${this.addr}] Connected to nyawesome <3`);
@@ -158,9 +154,7 @@ export class Socket extends EventEmitter {
 		try {
 			data = JSON.parse(raw.toString());
 		} catch (err) {
-			this.logger.warn(
-				`[${this.addr}] Error while parsing socket message.`,
-			);
+			this.logger.warn(`[${this.addr}] Error while parsing socket message.`);
 			this.logger.warn(err.message);
 		}
 
@@ -177,16 +171,16 @@ export class Socket extends EventEmitter {
 		let validation = handler.validationSchema
 			? validateObject(
 					handler.validationSchema,
-					data.d as ObjectFromSchema<any>,
+					data.d as ObjectFromSchema<any>
 			  )
 			: null;
 
 		if (validation && !validation.valid) {
 			this.logger.error(
-				`[${this.addr}] INVALID PAYLOAD - ${validation.missingEntries.length} missing fields (${validation.missingEntries})`,
+				`[${this.addr}] INVALID PAYLOAD - ${validation.missingEntries.length} missing fields (${validation.missingEntries})`
 			);
 			this.logger.error(
-				`[${this.addr}] INVALID PAYLOAD - ${validation.invalidTypes.length} invalid fields (${validation.invalidTypes})`,
+				`[${this.addr}] INVALID PAYLOAD - ${validation.invalidTypes.length} invalid fields (${validation.invalidTypes})`
 			);
 			return this.close(ErrorCodes.UNKNOWN_OPCODE);
 		}
@@ -209,19 +203,16 @@ export class Socket extends EventEmitter {
 }
 
 export interface Socket extends EventEmitter {
-	on(
-		eventName: SocketEvents.Close,
-		listener: (code: ErrorCodes) => any,
-	): this;
+	on(eventName: SocketEvents.Close, listener: (code: ErrorCodes) => any): this;
 
 	on(
 		eventName: SocketEvents.Incoming,
-		listener: (data: IncomingSocketMessage<any>) => any,
+		listener: (data: IncomingSocketMessage<any>) => any
 	): this;
 
 	on(
 		eventName: SocketEvents.Outgoing,
-		listener: (data: OutgoingSocketMessage<any>) => any,
+		listener: (data: OutgoingSocketMessage<any>) => any
 	): this;
 
 	emit(eventName: SocketEvents, ...args: any[]): boolean;

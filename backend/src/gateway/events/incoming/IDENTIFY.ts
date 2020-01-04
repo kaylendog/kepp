@@ -5,7 +5,7 @@ import { ErrorCodes } from "../../events";
 import { IncomingEvents, IncomingSocketHandler } from "./types";
 
 const IdentifyEventSchema = {
-	token: String,
+	token: String
 };
 
 /**
@@ -26,5 +26,5 @@ export const IDENTIFY: IncomingSocketHandler<ObjectFromSchema<
 
 		return socket.close(ErrorCodes.AUTHORIZATION_FAILED);
 	},
-	validationSchema: IdentifyEventSchema,
+	validationSchema: IdentifyEventSchema
 };

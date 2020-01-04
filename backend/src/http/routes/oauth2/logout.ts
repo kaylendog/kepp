@@ -7,7 +7,7 @@ import { fetchToken } from "../../util/auth";
 
 export const logoutHandler = (server: FoxServer) => async (
 	req: express.Request,
-	res: express.Response,
+	res: express.Response
 ) => {
 	const token = fetchToken(req);
 	if (!token) {
@@ -21,7 +21,7 @@ export const logoutHandler = (server: FoxServer) => async (
 	}
 
 	server.logger.debug(
-		`[oauth2] User ID "${user._id}" requesting logout - removing client user from database...`,
+		`[oauth2] User ID "${user._id}" requesting logout - removing client user from database...`
 	);
 
 	await ClientUserModel.deleteOne({ _id: user._id });

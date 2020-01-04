@@ -14,21 +14,21 @@ export interface Environment {
 }
 
 const DEFAULT_ENVIRONMENT: Environment = {
-	TOKEN: "",
+	TOKEN: '',
 	WRITE_PERMISSION_LEVEL: 2,
 	READ_PERMISSION_LEVEL: 1,
-	DB_URI: "",
+	DB_URI: '',
 	BACKEND_PORT: 8080,
 
-	CLIENT_ID: "",
-	REDIRECT_URI: "",
-	SCOPE: "",
-	CLIENT_SECRET: "",
+	CLIENT_ID: '',
+	REDIRECT_URI: '',
+	SCOPE: '',
+	CLIENT_SECRET: '',
 
-	WS_PORT: 6879,
+	WS_PORT: 6879
 };
 
 export const withDefaults = (env: Partial<Environment>): Environment => ({
 	...DEFAULT_ENVIRONMENT,
-	...env,
+	...env
 });

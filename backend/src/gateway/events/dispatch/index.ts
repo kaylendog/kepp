@@ -2,8 +2,8 @@ import { Socket } from "../../Socket";
 import { IncomingSocketHandler } from "../incoming/types";
 
 export enum DispatchEvents {
-	UpdatePrefix = "UPDATE_PREFIX",
-	UpdatePermission = "UPDATE_PERMISSION",
+	UpdatePrefix = 'UPDATE_PREFIX',
+	UpdatePermission = 'UPDATE_PERMISSION'
 }
 
 export interface DispatchSocketMessage<D> {
@@ -22,5 +22,5 @@ export interface DispatchSocketHandler<D> {
  */
 export const DispatchHandler: IncomingSocketHandler<{}> = {
 	op: 0,
-	handler: (socket, ev) => {},
+	handler: (socket, ev) => {}
 };

@@ -3,4 +3,4 @@ import { render } from "react-dom";
 
 import { AppHMR } from "./App";
 
-render(<AppHMR />, document.querySelector("#app-mount"));
+render(<AppHMR />, document.querySelector('#app-mount'));

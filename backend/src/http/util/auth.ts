@@ -13,15 +13,15 @@ import { ServersideError, Unauthorized } from "../errors";
 export const requireAuthentication = async (
 	req: Request,
 	res: Response,
-	next: NextFunction,
+	next: NextFunction
 ) => {
-	const authHeader = req.header("Authorization");
+	const authHeader = req.header('Authorization');
 	if (!authHeader) {
 		Unauthorized(res);
 		return next(false);
 	}
 
-	const token = authHeader.split(" ")[1];
+	const token = authHeader.split(' ')[1];
 
 	if (!token) {
 		Unauthorized(res);
@@ -42,12 +42,12 @@ export const requireAuthentication = async (
  * @param req Request
  */
 export const fetchToken = (req: Request) => {
-	const authHeader = req.header("Authorization");
+	const authHeader = req.header('Authorization');
 	if (!authHeader) {
 		return null;
 	}
 
-	const token = authHeader.split(" ")[1];
+	const token = authHeader.split(' ')[1];
 
 	if (!token) {
 		return null;

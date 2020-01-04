@@ -12,12 +12,12 @@ import { logoutHandler } from "./logout";
 export const ACTIVE_AUTH_TICKETS: string[] = [];
 
 export const oauth2: Route = {
-	path: "/oauth2",
-	method: "use",
+	path: '/oauth2',
+	method: 'use',
 	handler: (server) =>
 		Router()
-			.get("/login", loginHandler(server))
-			.post("/authorize", authorizeHandler(server))
+			.get('/login', loginHandler(server))
+			.post('/authorize', authorizeHandler(server))
 			// To-do: Can probably be optimized
-			.post("/logout", requireAuthentication, logoutHandler),
+			.post('/logout', requireAuthentication, logoutHandler)
 };

@@ -9,18 +9,18 @@ import { ACTIVE_AUTH_TICKETS } from "./";
 
 export const loginHandler = (server: FoxServer) => (
 	req: express.Request,
-	res: express.Response,
+	res: express.Response
 ) => {
-	server.logger.debug("[oauth2] Checking OAuth2 config is valid...");
+	server.logger.debug('[oauth2] Checking OAuth2 config is valid...');
 
 	if (!validateObject(OAuth2ConfigSchema, OAuth2Config).valid) {
 		server.logger.warn(
-			'[oauth2] OAuth is currently unconfigured, or is configured incorrectly. Please configure it in "config.json".',
+			'[oauth2] OAuth is currently unconfigured, or is configured incorrectly. Please configure it in "config.json".'
 		);
-		return ServersideError(res, "OAuth2 unconfigured.");
+		return ServersideError(res, 'OAuth2 unconfigured.');
 	}
 
-	server.logger.debug("[oauth2] Config valid. Creating auth ticket...");
+	server.logger.debug('[oauth2] Config valid. Creating auth ticket...');
 
 	const state = Math.floor(Math.random() * 1e16).toString(16);
 	ACTIVE_AUTH_TICKETS.push(state);
@@ -30,13 +30,13 @@ export const loginHandler = (server: FoxServer) => (
 	res.redirect(
 		`https://discordapp.com/api/oauth2/authorize?${qs.stringify({
 			...OAuth2Config,
-			response_type: "code",
-			state,
-		})}`,
+			response_type: 'code',
+			state
+		})}`
 	);
 
 	server.logger.debug(
-		`[oauth2][login][${state}] Redirected to Discord. Awaiting for redirect request...`,
+		`[oauth2][login][${state}] Redirected to Discord. Awaiting for redirect request...`
 	);
 
 	// Ensure tickets expire after 15 minutes.
