@@ -111,5 +111,5 @@ dist/
 .DS_Store
 bin/
 
-./frontend/webpack/env/dev.js
-./backend/src/env/dev.ts
+dev.js
+dev.ts
