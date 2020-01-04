@@ -1,8 +1,9 @@
 {
 	"name": "kepp-frontend",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"scripts": {
-		"start": "webpack-dev-server --hot --config ./webpack/webpack.dev.js"
+		"start": "webpack-dev-server --hot --config ./webpack/webpack.dev.js",
+		"postinstall": "rm -r ./node_modules/@types/react-native/"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.7",
