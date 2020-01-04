@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"module": "CommonJS",
+		"target": "ESNext",
+
+		"outDir": "./dist/",
+		"jsx": "react",
+
+		"baseUrl": "./src",
+		"paths": {
+			"@layout/*": ["./layout/*"],
+			"@pages/*": ["./pages/*"],
+			"@theme/*": ["./theme/*"],
+			"~/*": ["./*"]
+		}
+	},
+	"include": ["./src/**/*"]
+}
