@@ -1,0 +1,6 @@
+{
+	"name": "kepp-frontend",
+	"devDependencies": {
+		"webpack": "^4.41.5"
+	}
+}
