@@ -1,10 +1,29 @@
-const sharedConfig = require("./webpack.config");
-const path = require("path");
-const merge = require("webpack-merge");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path'),
+	merge = require('webpack-merge'),
+	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+	OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
+	TerserPlugin = require('terser-webpack-plugin');
+
+const sharedConfig = require('./webpack.config');
 
 module.exports = merge(sharedConfig, {
-	mode: "production",
+	mode: 'production',
+
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+			maxInitialRequests: Infinity,
+			maxSize: 512e3,
+			minSize: 0,
+			cacheGroups: {
+				vendor: {
+					test: /[\\/]node_modules[\\/]/
+				}
+			}
+		},
+		minimize: true,
+		minimizer: [new TerserPlugin({ extractComments: false })]
+	},
 
 	module: {
 		rules: [
@@ -13,18 +32,18 @@ module.exports = merge(sharedConfig, {
 				use: [
 					MiniCssExtractPlugin.loader,
 					{
-						loader: "css-loader",
+						loader: 'css-loader',
 						options: {
 							modules: true,
 							importLoaders: 1,
-							localIdentName: "[sha1:hash:hex:4]"
+							localIdentName: '[sha1:hash:hex:4]'
 						}
 					},
-					"less-loader"
+					'less-loader'
 				]
 			}
 		]
 	},
 
-	plugins: [new MiniCssExtractPlugin()]
+	plugins: [new MiniCssExtractPlugin(), new OptimizeCssAssetsPlugin()]
 });

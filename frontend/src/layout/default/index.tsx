@@ -4,7 +4,7 @@ import DiscordLogo from "~/assets/icons/discord_logo.svg";
 
 import { Heading } from "@theme/Typography";
 
-const v = `v${require("~/../package.json").version}`;
+const v = `v${require('~/../package.json').version}`;
 
 const Layout = styled.main`
 	display: flex;
@@ -56,9 +56,7 @@ export const DefaultLayout = (props: any) => (
 	<Layout>
 		<Navbar>
 			<br></br>
-			<VersionLink href="https://github.com/kippfoxx/kepp">
-				{v}
-			</VersionLink>
+			<VersionLink href="https://github.com/kippfoxx/kepp">{v}</VersionLink>
 			<NavBrand>kepp</NavBrand>
 			<div>
 				<img src={DiscordLogo} width={48}></img>

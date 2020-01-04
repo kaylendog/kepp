@@ -5,7 +5,7 @@ import { Landing } from "./Landing";
 export const routes: RouteConfig[] = [
 	{
 		component: Landing,
-		path: "/",
+		path: '/',
 		exact: true
 	}
 ];
