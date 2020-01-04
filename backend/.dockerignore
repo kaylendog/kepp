@@ -1,0 +1,9 @@
+# Prevent dependancies from being moved across
+dist/
+
+# Prevent dist from being moved across to force fresh compiling
+node_modules/
+
+# Extras
+.DS_Store
+*.log
