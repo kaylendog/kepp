@@ -11,7 +11,9 @@ module.exports = merge(sharedConfig, {
 
 	devServer: {
 		contentBase: path.join(__dirname, '../dist'),
-		port: 3000
+		publicPath: '/',
+		port: 3000,
+		historyApiFallback: true
 	},
 
 	plugins: [new ErrorOverlayPlugin(), new BundleAnalyzerPlugin()]

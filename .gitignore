@@ -109,3 +109,7 @@ dist
 dist/
 .awcache
 .DS_Store
+bin/
+
+./frontend/webpack/env/dev.js
+./backend/src/env/dev.ts

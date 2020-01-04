@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { device } from "@theme/.";
@@ -23,18 +24,12 @@ const Splash = styled.div`
 	}
 `;
 
-export const Landing = () => (
+export const NotFound = () => (
 	<div>
 		<Splash>
-			<Heading>A really over-engineered furry Discord bot.</Heading>
-			<SubHeading>
-				I don't know why I put this much effort into making this. It does
-				everything I could think of.
-			</SubHeading>
-			<a href={`${process.env.BACKEND_URI}/oauth2/login`}>
-				<Button>Add to server</Button>
-			</a>
-			<Button>Documentation</Button>
+			<Heading>Error 404: Not Found.</Heading>
+			<SubHeading>I don't know what you were looking for.</SubHeading>
+			<Link to="/">Go home</Link>
 		</Splash>
 	</div>
 );

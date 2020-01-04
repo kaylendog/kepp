@@ -14,6 +14,7 @@ module.exports = {
 
 	output: {
 		path: path.resolve(__dirname, '../dist'),
+		publicPath: '/',
 		filename: 'bundle.js'
 	},
 
@@ -75,6 +76,7 @@ module.exports = {
 		new webpack.NamedModulesPlugin(),
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, '../src/index.html')
-		})
+		}),
+		new webpack.EnvironmentPlugin(require('./env'))
 	]
 };

@@ -5,9 +5,9 @@
 	"repository": "https://github.com/catofpoptarts/nyapi/",
 	"license": "MIT",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=development nodemon ./dist/runAPI.js",
+		"dev": "cross-env NODE_ENV=development nodemon -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/runAPI.js",
 		"build:dev": "tsc --build tsconfig.json --watch",
-		"start": "cross-env NODE_ENV=production node dist/runAPI.js",
+		"start": "cross-env NODE_ENV=production node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/runAPI.js",
 		"build": "tsc --build tsconfig.json",
 		"test": "mocha -r ts-node/register tests/*.ts"
 	},
@@ -24,6 +24,8 @@
 		"mongoose": "^5.5.2",
 		"morgan": "^1.9.1",
 		"query-string": "^6.8.3",
+		"ts-node": "^8.5.4",
+		"tsconfig-paths": "^3.9.0",
 		"ws": "^7.2.1"
 	},
 	"devDependencies": {
@@ -43,8 +45,6 @@
 		"mocha": "^6.2.0",
 		"nodemon": "^2.0.2",
 		"prettier": "^1.19.1",
-		"ts-node": "^8.5.4",
-		"tsconfig-paths": "^3.9.0",
 		"typescript": "^3.4.3"
 	},
 	"main": "dist/runAPI.js",
