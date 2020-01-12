@@ -1,41 +1,24 @@
 import * as qs from "query-string";
 import * as React from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { Redirect, RouteComponentProps, StaticContext, withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { Splash } from "~/layout/default/Splash";
+import { AppState } from "~/store";
+import { AuthState } from "~/store/auth/types";
+import { Button } from "~/theme/Buttons";
+import { Heading, SubHeading } from "~/theme/Typography";
+import { APIRequestMaker } from "~/util/requests";
 
-import { device } from "@theme/.";
+const connector = connect((state: AppState) => state.auth, {
+	authorize: () => ({ type: 'AUTHORIZE' })
+});
 
-import { Button } from "../theme/Buttons";
-import { Heading, SubHeading } from "../theme/Typography";
-import { APIRequestMaker } from "../util/requests";
-
-const Splash = styled.div`
-	margin: 0 auto;
-	max-width: 400px;
-
-	@media ${device.tablet} {
-		max-width: 600px;
-	}
-
-	@media ${device.laptop} {
-		max-width: 800px;
-	}
-
-	@media ${device.desktop} {
-		max-width: 1400px;
-	}
-`;
-
-class AuthRedirectComponent extends React.Component<
-	RouteComponentProps<any, StaticContext, any>,
-	{ errored: boolean; authorized: boolean }
+class AuthRedirectDispatchComponent extends React.Component<
+	ConnectedProps<typeof connector> &
+		RouteComponentProps<any, StaticContext, any> & { children: JSX.Element },
+	{}
 > {
-	state = {
-		errored: false,
-		authorized: false
-	};
-
 	async tryAuthentication() {
 		this.setState({ errored: false, authorized: false });
 
@@ -67,22 +50,36 @@ class AuthRedirectComponent extends React.Component<
 	}
 
 	render() {
+		const childProps = { authorized: false };
+		return <>{this.props.children}</>;
+	}
+}
+
+const AuthRedirectWrapper = connector(
+	withRouter(AuthRedirectDispatchComponent)
+);
+
+class AuthRedirectComponent extends React.Component<
+	{ errored: boolean; authorized: boolean; tryAuthentication: () => any },
+	{}
+> {
+	render() {
 		return (
 			<div>
 				<Splash>
-					{!this.state.errored && (
+					{!this.props.errored && (
 						<>
 							<Heading>Authenticating</Heading>
 							<SubHeading>Give us a second...</SubHeading>
 						</>
 					)}
-					{this.state.errored && (
+					{this.props.errored && (
 						<>
 							<Heading>Authorization Failed.</Heading>
 							<SubHeading>
 								Something went wrong while we were trying to log you in.
 							</SubHeading>
-							<Button onClick={() => this.tryAuthentication()}>
+							<Button onClick={() => this.props.tryAuthentication()}>
 								Try again?
 							</Button>
 							<Link to="/">
@@ -90,11 +87,15 @@ class AuthRedirectComponent extends React.Component<
 							</Link>
 						</>
 					)}
-					{this.state.authorized && <Redirect to="/dashboard" />}
+					{this.props.authorized && <Redirect to="/dashboard" />}
 				</Splash>
 			</div>
 		);
 	}
 }
 
-export const AuthRedirect = withRouter(AuthRedirectComponent);
+export const AuthRedirect = (
+	<AuthRedirectDispatchComponent>
+		<AuthRedirectComponent></AuthRedirectComponent>
+	</AuthRedirectDispatchComponent>
+);

@@ -2,6 +2,7 @@ import "./scss/main.scss";
 
 import * as React from "react";
 import { hot } from "react-hot-loader/root";
+import { Provider } from "react-redux";
 import { renderRoutes } from "react-router-config";
 import { BrowserRouter, Switch, withRouter } from "react-router-dom";
 import { Transition, TransitionGroup } from "react-transition-group";
@@ -11,6 +12,7 @@ import { GlobalStyle, theme } from "@theme/.";
 
 import { DefaultLayout } from "./layout/default";
 import { routes } from "./pages";
+import { store } from "./store";
 
 const TransitionWrapper = withRouter((props: any) => (
 	<TransitionGroup>
@@ -23,8 +25,10 @@ const TransitionWrapper = withRouter((props: any) => (
 const App = () => (
 	<BrowserRouter>
 		<ThemeProvider theme={theme}>
-			<GlobalStyle />
-			<DefaultLayout>{renderRoutes(routes)}</DefaultLayout>
+			<Provider store={store}>
+				<GlobalStyle />
+				<DefaultLayout>{renderRoutes(routes)}</DefaultLayout>
+			</Provider>
 		</ThemeProvider>
 	</BrowserRouter>
 );
