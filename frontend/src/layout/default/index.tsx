@@ -1,8 +1,10 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import DiscordLogo from "~/assets/icons/discord_logo.svg";
 
 import { Heading } from "@theme/Typography";
+
+import { AuthWrapperChildProps, withAuthState } from "../../components/AuthorizeState";
 
 const v = `v${require('~/../package.json').version}`;
 
@@ -52,17 +54,31 @@ const VersionLink = styled.a`
 	}
 `;
 
-export const DefaultLayout = (props: any) => (
+export const DefaultLayoutComponent = (
+	props: AuthWrapperChildProps & { children: any }
+) => (
 	<Layout>
 		<Navbar>
 			<br></br>
-			<VersionLink href="https://github.com/kippfoxx/kepp">{v}</VersionLink>
-			<NavBrand>kepp</NavBrand>
+			<VersionLink href="https://github.com/fuzzyfoxie/kepp">{v}</VersionLink>
+			<NavBrand>
+				<Link to="/" style={{ color: 'white' }}>
+					kepp
+				</Link>
+			</NavBrand>
 			<div>
-				<img src={DiscordLogo} width={48}></img>
+				{(props.authenticated && <Link to="/dashboard">Dashboard</Link>) ||
+					(!props.authenticated && (
+						<a href={`${process.env.BACKEND_URI}/oauth2/login`}>Log In</a>
+					))}
 			</div>
 		</Navbar>
 		<PageContent>{props.children}</PageContent>
-		<Footer>made with 🧡 by kipp</Footer>
+		<Footer>
+			made with 🧡 by <a href="https://twitter.com/fuzzyfoxie">skye</a> &middot;
+			buy me a <a href="https://patreon.com">hot chocolate</a>
+		</Footer>
 	</Layout>
 );
+
+export const DefaultLayout = withAuthState(DefaultLayoutComponent);

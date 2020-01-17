@@ -2,22 +2,22 @@ import * as React from "react";
 import { RouteConfig } from "react-router-config";
 
 import { NotFound } from "./404";
-import { AuthRedirect } from "./authRedirect";
-import { Landing } from "./Landing";
+import { Landing } from "./landing";
+import { Redirect } from "./oauth2/redirect";
 
 export const routes: RouteConfig[] = [
 	{
-		component: () => <Landing />,
+		component: Landing,
 		path: '/',
 		exact: true
 	},
 	{
-		component: () => <AuthRedirect />,
+		component: Redirect,
 		path: '/auth/redirect',
 		exact: true
 	},
 	{
-		component: () => <NotFound />,
+		component: NotFound,
 		path: '*'
 	}
 ];

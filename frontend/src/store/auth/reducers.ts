@@ -1,8 +1,8 @@
-import { AuthActions, AuthActionTypes, AuthState } from "./types";
+import { AuthActions, AuthActionTypes, AuthState, AuthStateStatus } from "./types";
 
 const initialState: AuthState = {
 	jwt: 'null',
-	state: 'UNAUTHORIZED'
+	status: AuthStateStatus.Unauthorized
 };
 
 export const authReducer = (
@@ -13,7 +13,8 @@ export const authReducer = (
 		case AuthActions.Authorize:
 			return {
 				...state,
-				jwt: action.payload.jwt
+				jwt: action.payload.jwt,
+				status: AuthStateStatus.Authenticated
 			};
 
 		default: {

@@ -16,5 +16,8 @@ module.exports = merge(sharedConfig, {
 		historyApiFallback: true
 	},
 
-	plugins: [new ErrorOverlayPlugin(), new BundleAnalyzerPlugin()]
+	plugins: [
+		new ErrorOverlayPlugin(),
+		new BundleAnalyzerPlugin({ openAnalyzer: false })
+	]
 });

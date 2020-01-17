@@ -1,10 +1,17 @@
+export enum AuthStateStatus {
+	Authenticated = 'AUTHENTICATED',
+	Authorizing = 'AUTHORIZING',
+	Unauthorized = 'UNAUTHORIZED'
+}
+
 export interface AuthState {
 	jwt: string | null;
-	state: 'AUTHORIZED' | 'AUTHORIZING' | 'UNAUTHORIZED';
+	status: AuthStateStatus;
 }
 
 export enum AuthActions {
-	Authorize = 'AUTHORIZE'
+	Authorize = 'AUTHORIZE',
+	Logout = 'LOGOUT'
 }
 
 interface AuthorizeAction {
