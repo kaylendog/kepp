@@ -1,8 +1,10 @@
-import { AuthActions, AuthActionTypes, AuthState, AuthStateStatus } from "./types";
+import { AuthActions, AuthActionTypes, AuthState, AuthStateStatus } from './types';
 
 const initialState: AuthState = {
-	jwt: 'null',
-	status: AuthStateStatus.Unauthorized
+	jwt: localStorage.getItem('token') || 'null',
+	status: localStorage.getItem('token')
+		? AuthStateStatus.Authenticated
+		: AuthStateStatus.Unauthorized
 };
 
 export const authReducer = (
@@ -10,12 +12,14 @@ export const authReducer = (
 	action: AuthActionTypes
 ): AuthState => {
 	switch (action.type) {
-		case AuthActions.Authorize:
+		case AuthActions.Authorize: {
+			localStorage.setItem('token', action.payload.jwt);
 			return {
 				...state,
 				jwt: action.payload.jwt,
 				status: AuthStateStatus.Authenticated
 			};
+		}
 
 		default: {
 			return state;

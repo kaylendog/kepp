@@ -1,11 +1,11 @@
-import * as qs from "query-string";
-import * as React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { Redirect, RouteComponentProps, withRouter } from "react-router";
-import { AppState } from "~/store";
-import { AuthActions, AuthActionTypes, AuthStateStatus } from "~/store/auth/types";
+import * as qs from 'query-string';
+import * as React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { AppState } from '~/store';
+import { AuthActions, AuthActionTypes, AuthStateStatus } from '~/store/auth/types';
 
-import { APIRequestMaker } from "../util/requests";
+import { APIRequestMaker } from '../util/requests';
 
 const connector = connect(
 	(state: AppState) => ({ state: state.auth }),
@@ -92,13 +92,6 @@ export const AuthStateProvider = withRouter(
 	connector(AuthStateProviderComponent)
 );
 
-type ComponentConstructor<
-	T extends AuthWrapperChildProps = AuthWrapperChildProps
-> = new (props: T) => React.Component;
-type ComponentFunction<
-	T extends AuthWrapperChildProps = AuthWrapperChildProps
-> = (props: T) => any;
-
 /**
  * Allow a component to access the auth state.
  * @param Component
@@ -106,8 +99,8 @@ type ComponentFunction<
 export const withAuthState = <
 	T extends AuthWrapperChildProps = AuthWrapperChildProps
 >(
-	Component: ComponentConstructor<T> | ComponentFunction<T>
-) => (props: any) => (
+	Component: React.FunctionComponent<T>
+): React.FunctionComponent => (props: any) => (
 	<AuthStateProvider>
 		{(state) => (
 			<Component {...state} {...props}>

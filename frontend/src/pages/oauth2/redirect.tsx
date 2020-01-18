@@ -1,10 +1,10 @@
-import * as React from "react";
-import { Redirect as RouterRedirect } from "react-router";
-import { SyncLoader } from "react-spinners";
+import * as React from 'react';
+import { Redirect as RouterRedirect } from 'react-router';
+import { SyncLoader } from 'react-spinners';
 
 import {
 	AuthStateProvider, AuthWrapperChildProps, withAuthState,
-} from "../../components/withAuthState";
+} from '../../components/withAuthState';
 
 class RedirectComponent extends React.Component<AuthWrapperChildProps> {
 	render() {
@@ -23,4 +23,6 @@ class RedirectComponent extends React.Component<AuthWrapperChildProps> {
 	}
 }
 
-export const Redirect = withAuthState(RedirectComponent);
+export const Redirect = withAuthState((state) => (
+	<RedirectComponent {...state}></RedirectComponent>
+));

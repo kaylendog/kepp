@@ -30,7 +30,7 @@ export abstract class Module extends EventEmitter {
 	async moduleDidInit() {}
 
 	/**
-	 * Return the name of the module - identical to the name of the module's constructor function.
+	 * Return the name of the module - identical to the name of t he module's constructor function.
 	 */
 	get name() {
 		return this.constructor.name;
