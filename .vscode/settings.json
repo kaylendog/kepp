@@ -3,5 +3,6 @@
 	"editor.insertSpaces": true,
 	"editor.detectIndentation": false,
 	"files.encoding": "utf8",
-	"prettier.singleQuote": true
+	"prettier.singleQuote": true,
+	"importSorter.importStringConfiguration.quoteMark": "single"
 }
