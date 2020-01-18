@@ -1,10 +1,12 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Heading } from "@theme/Typography";
+import { Heading } from '@theme/Typography';
 
-import { AuthStateProvider, AuthWrapperChildProps } from "../../components/withAuthState";
+import {
+	AuthStateProvider, AuthWrapperChildProps, withAuthState,
+} from '../../components/withAuthState';
 
 const v = `v${require('~/../package.json').version}`;
 
@@ -54,9 +56,9 @@ const VersionLink = styled.a`
 	}
 `;
 
-export const DefaultLayoutComponent = (
-	props: AuthWrapperChildProps & { children: any }
-) => (
+export const DefaultLayout = withAuthState<
+	AuthWrapperChildProps & { children: any }
+>((state) => (
 	<Layout>
 		<Navbar>
 			<br></br>
@@ -67,26 +69,16 @@ export const DefaultLayoutComponent = (
 				</Link>
 			</NavBrand>
 			<div>
-				{(props.authenticated && <Link to="/dashboard">Dashboard</Link>) ||
-					(!props.authenticated && (
+				{(state.authenticated && <Link to="/dashboard">Dashboard</Link>) ||
+					(!state.authenticated && (
 						<a href={`${process.env.BACKEND_URI}/oauth2/login`}>Log In</a>
 					))}
 			</div>
 		</Navbar>
-		<PageContent>{props.children}</PageContent>
+		<PageContent>{state.children}</PageContent>
 		<Footer>
 			made with 🧡 by <a href="https://twitter.com/fuzzyfoxie">skye</a> &middot;
 			buy me a <a href="https://patreon.com">hot chocolate</a>
 		</Footer>
 	</Layout>
-);
-
-export const DefaultLayout = (props: any) => (
-	<AuthStateProvider>
-		{(state) => (
-			<DefaultLayoutComponent {...state}>
-				{props.children}
-			</DefaultLayoutComponent>
-		)}
-	</AuthStateProvider>
-);
+));

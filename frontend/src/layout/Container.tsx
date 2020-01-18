@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { device } from "~/theme";
+import styled from 'styled-components';
+import { device } from '~/theme';
 
-export const Splash = styled.div`
+export const Container = styled.div`
 	margin: 0 auto;
 	padding: 0 1rem;
 	max-width: 400px;

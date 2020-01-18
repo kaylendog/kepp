@@ -1,15 +1,15 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import { Splash } from "~/layout/default/Splash";
-import { Heading, SubHeading } from "~/theme/Typography";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Container } from '~/layout/Container';
+import { Heading, SubHeading } from '~/theme/Typography';
 
-import { Button } from "@theme/Buttons";
+import { Button } from '@theme/Buttons';
 
-import { withAuthState } from "../components/withAuthState";
+import { withAuthState } from '../components/withAuthState';
 
 export const Landing = withAuthState((state) => (
 	<div>
-		<Splash>
+		<Container>
 			<Heading>A really over-engineered furry Discord bot.</Heading>
 			<SubHeading>
 				I don't know why I put this much effort into making this. It does
@@ -26,6 +26,6 @@ export const Landing = withAuthState((state) => (
 					</a>
 				))}
 			<Button>Documentation</Button>
-		</Splash>
+		</Container>
 	</div>
 ));
