@@ -2,5 +2,8 @@
 	"name": "keppbot",
 	"version": "1.0.0",
 	"main": "index.js",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^13.1.8"
+	}
 }

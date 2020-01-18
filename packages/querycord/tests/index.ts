@@ -5,5 +5,5 @@ const handler = async (msg: MessageQuery<GuildChannel>) => {
 	await msg.content();
 
 	const guild = await msg.guild;
-	guild.id;
+	msg.guild;
 };
