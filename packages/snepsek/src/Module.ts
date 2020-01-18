@@ -1,7 +1,8 @@
 import { EventEmitter } from 'events';
-import { Context } from 'vm';
 
-import { Command as CommandConstructor, CommandOptions, ModuleCommandHandler } from './Command';
+import {
+	Command as CommandConstructor, CommandOptions, Context, ModuleCommandHandler,
+} from './Command';
 
 type ModuleTask = () => void;
 type ModuleGroup = {};

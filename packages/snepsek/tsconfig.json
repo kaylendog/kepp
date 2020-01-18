@@ -6,13 +6,12 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"outDir": "dist",
-		"declaration": true,
-		"experimentalDecorators": true
+		"declaration": true
 	},
 	"include": [
-		"src/**/*.*",
-		"../packages/snepsek/Command.ts",
-		"../packages/snepsek/Module.ts"
+		"src/**/*.*"
 	],
-	"exclude": ["node_modules"]
+	"exclude": [
+		"node_modules"
+	]
 }
