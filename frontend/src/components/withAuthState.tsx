@@ -34,7 +34,7 @@ export type AuthWrapperChildProps = AuthWrapperState & {
 /**
  * Component that wraps the auth state, passing info to children components.
  */
-class AuthWrapperComponent extends React.Component<
+class AuthStateProviderComponent extends React.Component<
 	ConnectedProps<typeof connector> &
 		RouteComponentProps & {
 			children: (state: AuthWrapperChildProps) => any;
@@ -88,20 +88,31 @@ class AuthWrapperComponent extends React.Component<
 	}
 }
 
-const AuthWrapper = withRouter(connector(AuthWrapperComponent));
+export const AuthStateProvider = withRouter(
+	connector(AuthStateProviderComponent)
+);
 
-type ComponentConstructor = new (props: any) => React.Component<
-	AuthWrapperChildProps & any,
-	any
->;
-type ComponentFunction = (props: any) => JSX.Element;
+type ComponentConstructor<
+	T extends AuthWrapperChildProps = AuthWrapperChildProps
+> = new (props: T) => React.Component;
+type ComponentFunction<
+	T extends AuthWrapperChildProps = AuthWrapperChildProps
+> = (props: T) => any;
 
 /**
- *
- * @param component
+ * Allow a component to access the auth state.
+ * @param Component
  */
-export const withAuthState = (
-	Component: ComponentConstructor | ComponentFunction
+export const withAuthState = <
+	T extends AuthWrapperChildProps = AuthWrapperChildProps
+>(
+	Component: ComponentConstructor<T> | ComponentFunction<T>
 ) => (props: any) => (
-	<AuthWrapper>{(state) => <Component {...state} {...props} />}</AuthWrapper>
+	<AuthStateProvider>
+		{(state) => (
+			<Component {...state} {...props}>
+				{props.children}
+			</Component>
+		)}
+	</AuthStateProvider>
 );

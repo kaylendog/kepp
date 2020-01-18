@@ -23,7 +23,6 @@ export const loginHandler = (server: FoxServer) => (
 	server.logger.debug('[oauth2] Config valid. Creating auth ticket...');
 
 	const state = Math.floor(Math.random() * 1e16).toString(16);
-	ACTIVE_AUTH_TICKETS.push(state);
 
 	server.logger.debug(`[oauth2][login] Created auth ticket "${state}"`);
 
@@ -38,6 +37,8 @@ export const loginHandler = (server: FoxServer) => (
 	server.logger.debug(
 		`[oauth2][login][${state}] Redirected to Discord. Awaiting for redirect request...`
 	);
+
+	ACTIVE_AUTH_TICKETS.push(state);
 
 	// Ensure tickets expire after 15 minutes.
 	setTimeout(() => {

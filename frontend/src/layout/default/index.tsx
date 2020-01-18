@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Heading } from "@theme/Typography";
 
-import { AuthWrapperChildProps, withAuthState } from "../../components/AuthorizeState";
+import { AuthStateProvider, AuthWrapperChildProps } from "../../components/withAuthState";
 
 const v = `v${require('~/../package.json').version}`;
 
@@ -81,4 +81,12 @@ export const DefaultLayoutComponent = (
 	</Layout>
 );
 
-export const DefaultLayout = withAuthState(DefaultLayoutComponent);
+export const DefaultLayout = (props: any) => (
+	<AuthStateProvider>
+		{(state) => (
+			<DefaultLayoutComponent {...state}>
+				{props.children}
+			</DefaultLayoutComponent>
+		)}
+	</AuthStateProvider>
+);
