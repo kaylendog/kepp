@@ -18,14 +18,17 @@ enum ConnectionStatus {
  */
 export class Client extends ErisClient {
 	modules: Map<string, Module> = new Map();
-	logger: Logger = new Logger('Manager');
+	logger: Logger = new Logger('Client');
 
 	connectionStatus: ConnectionStatus = ConnectionStatus.Disconnected;
 
 	constructor(opts: ClientOptions) {
 		super('', opts);
 
+		this.logger.info(`Running snepsek v${require('../package.json').version}`);
+
 		process.on('SIGINT', () => this.stop());
+		this.on('error', this.logger.error);
 	}
 
 	/**
@@ -43,6 +46,11 @@ export class Client extends ErisClient {
 	async start(token = this.token) {
 		this.token = token;
 
+		if (!this.token) {
+			this.logger.warn('No token specified - cannot log in.');
+			process.exit(1);
+		}
+
 		await this.preInitializeModules();
 
 		this.logger.debug(`Using access token '${this.token}'...`);
@@ -50,16 +58,16 @@ export class Client extends ErisClient {
 
 		await super.connect();
 
-		this.logger.debug('Connected to Discord - waiting for ready...');
 		this.connectionStatus = ConnectionStatus.Ready;
 
 		await waitForEvent(this, 'ready');
+
+		this.logger.debug('Connected to Discord.');
 		await this.postInitializeModules();
 
 		this.logger.info(
 			`Logged in as: ${this.user.username}#${this.user.discriminator}`
 		);
-		this.logger.info(`Running snepsek v${require('../package.json').version}`);
 	}
 
 	/**
