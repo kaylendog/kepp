@@ -60,7 +60,7 @@ export class Logger {
 		error: 'ERROR ',
 		info: '',
 		debug: 'Debug ',
-		success: 'Success'
+		success: 'Success '
 	};
 
 	/**
