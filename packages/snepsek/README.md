@@ -2,6 +2,12 @@
 
 Command, module, and dynamic permission system for Eris.
 
+## Goals
+
+The aim with this project is to create an isomorphic framework for developing bots, eventually targeting [eris](https://github.com/abalabahaha/eris/), [discord.js](https://discord.js.org), and our own in-house [querycord](https://github.com/fuzzyfoxie/kepp/tree/master/packages/querycord).
+
+This version currently only supports eris, it being the most lightweight (and of course, functional) of the three libraries listed above.
+
 ## Modules
 
 A module represents a set of methods, event listeners, and commands that all pertain to a similar functionality, be it fun-related, moderation-related, or something else.
