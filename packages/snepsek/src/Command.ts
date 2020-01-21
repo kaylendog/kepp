@@ -32,7 +32,17 @@ export class Command {
 		this.handler(ctx);
 	}
 
+	/**
+	 * Dynamically disable a command.
+	 */
 	disable() {
 		return (this.options.disabled = true);
+	}
+
+	/**
+	 * Dynamically enable a command.
+	 */
+	enable() {
+		return (this.options.disabled = false);
 	}
 }
