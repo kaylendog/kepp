@@ -4,9 +4,8 @@ import { Client } from 'eris';
 import { EventEmitter } from 'events';
 
 import { Logger } from '../../logging/dist';
-import { Command, CommandOptions, Context, ModuleCommandHandler } from './Command';
+import { Command, CommandOptions, ModuleCommandHandler } from './Command';
 
-import Eris = require('eris');
 type ModuleTask = () => void;
 type ModuleGroup = {};
 

@@ -1,7 +1,7 @@
+import { Context } from './Context';
+
 export type CommandHandler = (ctx: Context) => Promise<void>;
 export type ModuleCommandHandler = (ctx: Context) => Promise<void>;
-
-export interface Context {}
 
 export interface CommandOptions {
 	disabled: boolean;
@@ -31,6 +31,8 @@ export class Command {
 	async execute(ctx: Context) {
 		this.handler(ctx);
 	}
+
+	async evaluatePermission(ctx: Context) {}
 
 	/**
 	 * Dynamically disable a command.
