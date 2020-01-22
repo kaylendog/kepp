@@ -3,6 +3,9 @@ import colors from 'colors';
 type LogLevel = 'info' | 'warning' | 'error' | 'debug' | 'success';
 
 export class Logger {
+	private readonly nameColor =
+		Logger.colorNames[Math.floor(Math.random() * Logger.colorNames.length)];
+
 	constructor(readonly name: string) {}
 
 	public info(...msg: any[]): this {
@@ -37,34 +40,25 @@ export class Logger {
 	 */
 	private log(level: LogLevel, ...content: any[]): void {
 		return console.log(
-			`${colors.gray(Logger.getTimestamp())} ${colors.white(
-				'['
-			)}${this.getLoggerPrefix(level)}${colors.white(']')}`,
+			colors.gray(Logger.getTimestamp()),
+			colors.gray('|'),
+			Logger.getColor(this.nameColor)(this.name),
+			colors.gray('|'),
+			Logger.getColorFunction(level)(level),
 			...content
 		);
 	}
 
-	/**
-	 * Get the logger prefix
-	 * @param level
-	 */
-	private getLoggerPrefix(level: LogLevel): string {
-		const colorizer = Logger.getColorFunction(level);
-		const prefix = Logger.levelPrefixes[level];
-
-		return colorizer(prefix + this.name);
-	}
-
 	static levelPrefixes = {
-		warning: 'WARNING ',
-		error: 'ERROR ',
-		info: '',
-		debug: 'Debug ',
+		warning: 'warning',
+		error: 'error',
+		info: 'info',
+		debug: 'debug',
 		success: 'Success '
 	};
 
 	/**
-	 * Get the appropriate coloring function.
+	 * Get the appropriate coloring function. **Type-friendly**
 	 */
 	static getColorFunction = (level: LogLevel): ((string: string) => string) => {
 		switch (level) {
@@ -86,6 +80,25 @@ export class Logger {
 		}
 	};
 
+	static getColor = (str: string) => {
+		switch (str) {
+			case 'red':
+				return colors.red;
+			case 'green':
+				return colors.green;
+			case 'blue':
+				return colors.blue;
+			case 'yellow':
+				return colors.yellow;
+			case 'cyan':
+				return colors.cyan;
+			case 'magenta':
+				return colors.magenta;
+			default:
+				return colors.stripColors;
+		}
+	};
+
 	/**
 	 * Get the logging timestamp.
 	 */
@@ -95,6 +108,8 @@ export class Logger {
 			.split('T')[1]
 			.slice(0, -1);
 	}
+
+	static colorNames = ['red', 'green', 'blue', 'yellow', 'cyan', 'magenta'];
 }
 
 /**
