@@ -2,7 +2,7 @@ import { Guild } from 'eris';
 
 import { Client } from '../Client';
 
-type GuildResolvable = string | Guild;
+export type GuildResolvable = string | Guild;
 
 /**
  * Represents a structure which provides guild configuration to the client.
@@ -10,8 +10,8 @@ type GuildResolvable = string | Guild;
 export abstract class SettingsProvider<T> {
 	constructor(readonly client: Client) {}
 
-	abstract get(): Promise<T> | T;
-	abstract set(guild: T): Promise<void> | void;
+	abstract get(guild: GuildResolvable): Promise<T> | T;
+	abstract set(guild: GuildResolvable, settings: T): Promise<void> | void;
 
 	/**
 	 * Reaolve a guild.
@@ -25,5 +25,12 @@ export abstract class SettingsProvider<T> {
 		return this.client.guilds.get(guildResolvable);
 	}
 
-	update(id: string) {}
+	/**
+	 * Update a guild's settings
+	 * @param id
+	 * @param update
+	 */
+	async update(id: GuildResolvable, update: T) {
+		return this.set(id, { ...(await this.get(id)), ...update });
+	}
 }

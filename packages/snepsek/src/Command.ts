@@ -32,7 +32,10 @@ export class Command {
 		this.handler(ctx);
 	}
 
-	async evaluatePermission(ctx: Context) {}
+	async evaluatePermission(ctx: Context) {
+		if (ctx.member) {
+		}
+	}
 
 	/**
 	 * Dynamically disable a command.

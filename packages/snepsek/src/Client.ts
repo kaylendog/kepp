@@ -4,6 +4,8 @@ import * as path from 'path';
 
 import { Logger } from '../../logging/dist';
 import { Module } from './Module';
+import { MemoryProvider } from './provider/MemoryProvider';
+import { SettingsProvider } from './provider/SettingsProvider';
 import { waitForEvent } from './util/async';
 
 enum ConnectionStatus {
@@ -13,12 +15,18 @@ enum ConnectionStatus {
 	Reconnecting = 'RECONNECTING'
 }
 
+export interface ProviderSettings {}
+
 /**
  * Module management class.
  */
 export class Client extends ErisClient {
-	modules: Map<string, Module> = new Map();
-	logger: Logger = new Logger('Client');
+	readonly modules: Map<string, Module> = new Map();
+
+	readonly logger: Logger = new Logger('Client');
+	provider: SettingsProvider<ProviderSettings> = new MemoryProvider<
+		ProviderSettings
+	>(this);
 
 	connectionStatus: ConnectionStatus = ConnectionStatus.Disconnected;
 
@@ -163,5 +171,16 @@ export class Client extends ErisClient {
 		}
 
 		this.logger.success('Modules post-initialized.');
+	}
+
+	/**
+	 * Modify the SettingsProvider attached to the client.
+	 * @param provider
+	 */
+	useProvider<T extends ProviderSettings>(
+		provider: new (client: this) => SettingsProvider<T>
+	) {
+		this.provider = new provider(this);
+		return this;
 	}
 }

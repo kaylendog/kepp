@@ -1,4 +1,4 @@
-import { Message } from 'eris';
+import { Message, MessageContent, MessageFile } from 'eris';
 
 import { Client } from './Client';
 import { ChannelTypes } from './types/Discord';
@@ -17,6 +17,11 @@ export class Context {
 	 */
 	readonly member = this.message.member;
 
+	/**
+	 * The channel in which the command was run.
+	 */
+	readonly channel = this.message.channel;
+
 	constructor(readonly client: Client, readonly message: Message) {}
 
 	/**
@@ -33,6 +38,23 @@ export class Context {
 		return (
 			this.message.channel.type === ChannelTypes.DM ||
 			this.message.channel.type === ChannelTypes.Group
+		);
+	}
+
+	/**
+	 * Reply to the message
+	 * @param content
+	 * @param file
+	 */
+	reply(content: MessageContent, file?: MessageFile) {
+		if (typeof content === 'string') {
+			content = {
+				content: `<@${this.message.author.id}>, ${content}`
+			};
+		}
+		return this.message.channel.createMessage(
+			{ content: `<@${this.message.author.id}>`, ...content },
+			file
 		);
 	}
 }
