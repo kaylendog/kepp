@@ -1,7 +1,13 @@
 import { Context } from './Context';
 import { Module } from './Module';
 
-const createInhibitingDecorator = (...inhibitors: CommandInhibitor[]) => (
+/**
+ * Utility function for creating decorators that apply inhibitors to module commands.
+ * @param inhibitors
+ */
+export const createInhibitingDecorator = (
+	...inhibitors: CommandInhibitor[]
+) => (
 	module: new () => Module,
 	name: string,
 	descriptor: TypedPropertyDescriptor<ModuleCommandHandler>
