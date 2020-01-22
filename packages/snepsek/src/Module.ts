@@ -89,19 +89,24 @@ export abstract class Module extends EventEmitter {
 			);
 		};
 	};
+
+	/**
+	 * Mark a command as disabled.
+	 */
+	static disabled = (
+		module: new () => Module,
+		name: string,
+		descriptor: TypedPropertyDescriptor<ModuleCommandHandler>
+	) => {
+		if (descriptor.value instanceof Command) {
+			descriptor.value.disable();
+		}
+	};
 }
 
+// Static module exports for ease of access.
 export const command = Module.command;
-
-export const disabled = (
-	module: new () => Module,
-	name: string,
-	descriptor: TypedPropertyDescriptor<ModuleCommandHandler>
-) => {
-	if (descriptor.value instanceof Command) {
-		descriptor.value.disable();
-	}
-};
+export const disabled = Module.disabled;
 
 /**
  * Mark a module method as a task.
