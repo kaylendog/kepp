@@ -33,7 +33,7 @@ export class Client extends ErisClient {
 	constructor(opts: ClientOptions) {
 		super('', opts);
 
-		this.logger.info(`Running snepsek v${require('../package.json').version}`);
+		this.logger.info(`snepsek v${require('../package.json').version}`);
 
 		process.on('SIGINT', () => this.stop());
 		this.on('error', this.logger.error);
@@ -59,6 +59,9 @@ export class Client extends ErisClient {
 			process.exit(1);
 		}
 
+		await this.provider.init();
+		this.logger.debug('SettingsProvider initialized.');
+
 		await this.preInitializeModules();
 
 		this.logger.debug(`Using access token '${this.token}'...`);
@@ -74,7 +77,7 @@ export class Client extends ErisClient {
 		await this.postInitializeModules();
 
 		this.logger.info(
-			`Logged in as: ${this.user.username}#${this.user.discriminator}`
+			`Logged in as: ${this.user.username}#${this.user.discriminator} (${this.modules.size} modules loaded)`
 		);
 	}
 

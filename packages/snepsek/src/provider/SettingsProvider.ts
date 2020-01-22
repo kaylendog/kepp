@@ -14,6 +14,13 @@ export abstract class SettingsProvider<T> {
 	abstract set(guild: GuildResolvable, settings: T): Promise<void> | void;
 
 	/**
+	 * Called before module initialization.
+	 */
+	async init() {
+		return;
+	}
+
+	/**
 	 * Reaolve a guild.
 	 *
 	 * @param guildResolvable
