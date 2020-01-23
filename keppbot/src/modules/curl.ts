@@ -1,9 +1,10 @@
-import { Context } from '../../../packages/snepsek/src/Command';
-import { command, Module } from '../../../packages/snepsek/src/Module';
+import { command, Context, Module } from '../../../packages/snepsek/src/';
 
 export class Curl extends Module {
-	@command()
+	@command({ disabled: false, inhibitors: [] })
 	async curl(ctx: Context) {}
 
-	async moduleDidInit() {}
+	async moduleDidInit() {
+		this.logger.info(`Curl module initialized.`);
+	}
 }
