@@ -39,6 +39,20 @@ export abstract class Module extends EventEmitter {
 	}
 
 	/**
+	 * Called before the client disconnects from Discord.
+	 */
+	moduleWillUnload(): Promise<void> | void {
+		return;
+	}
+
+	/**
+	 * Called after the client disconnects from Discord, and before the process terminates.
+	 */
+	moduleDidUnload(): Promise<void> | void {
+		return;
+	}
+
+	/**
 	 * Return the name of the module - identical to the name of t he module's constructor function.
 	 */
 	get name() {

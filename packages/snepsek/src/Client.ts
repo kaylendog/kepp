@@ -43,8 +43,13 @@ export class Client extends ErisClient {
 	 * Stop the bots
 	 */
 	async stop() {
-		this.logger.debug('Unloading modules...');
+		this.logger.info('Cleaning up...');
+
+		await this.modulesWillUnload();
 		this.disconnect({ reconnect: false });
+		await this.modulesDidUnload();
+
+		this.logger.info('Done :3');
 		process.exit();
 	}
 
@@ -107,6 +112,10 @@ export class Client extends ErisClient {
 	 * @param directoryPath
 	 */
 	async loadModulesIn(directoryPath: string, recursive = false) {
+		this.logger.debug(
+			`Looking for modules in '${directoryPath}' - recursive=${recursive}`
+		);
+
 		if (!path.isAbsolute(directoryPath)) {
 			directoryPath = path.resolve(process.cwd(), directoryPath);
 		}
@@ -130,14 +139,15 @@ export class Client extends ErisClient {
 
 			const ext = file.split('.').pop();
 
-			if (!ext || /[jt]s/.test(ext)) {
+			if (!ext || !/[jt]s/.test(ext)) {
 				return;
 			}
-			try {
-				const potentialModule = import(filePath);
 
-				for (const entry of Object.values(potentialModule)) {
-					if (entry.prototype instanceof Module) {
+			try {
+				const potentialModule = await import(filePath);
+
+				for (const entry of Object.values<any>(potentialModule)) {
+					if (entry.prototype && entry.prototype instanceof Module) {
 						await this.addModule(entry);
 					}
 				}
@@ -151,16 +161,10 @@ export class Client extends ErisClient {
 	 * Pre-initialize modules attached to the client.
 	 */
 	async preInitializeModules() {
-		let i = 1;
 		for (const mdl of this.modules) {
-			this.logger.debug(`[${i}/${this.modules.size}] ${mdl[1].name}`);
-
-			if (mdl[1].moduleWillInit) {
-				await mdl[1].moduleWillInit();
-			}
+			await mdl[1].moduleWillInit();
 		}
 		this.logger.success('Modules pre-initialized.');
-		i++;
 	}
 
 	/**
@@ -168,9 +172,7 @@ export class Client extends ErisClient {
 	 */
 	async postInitializeModules() {
 		for (const mdl of this.modules) {
-			if (mdl[1].moduleDidInit) {
-				await mdl[1].moduleDidInit();
-			}
+			await mdl[1].moduleDidInit();
 		}
 
 		this.logger.success('Modules post-initialized.');
@@ -185,5 +187,27 @@ export class Client extends ErisClient {
 	) {
 		this.provider = new provider(this);
 		return this;
+	}
+
+	/**
+	 * Unload modules attached to the client.
+	 */
+	async modulesWillUnload() {
+		for (const mdl of this.modules) {
+			await mdl[1].moduleWillUnload();
+		}
+
+		this.logger.success('Modules unloaded.');
+	}
+
+	/**
+	 * Stop modules attached to the client.
+	 */
+	async modulesDidUnload() {
+		for (const mdl of this.modules) {
+			await mdl[1].moduleDidUnload();
+		}
+
+		this.logger.success('Modules stopped.');
 	}
 }
