@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events';
 
 /**
  * Return an awaitable that will resolve in `x` ms.

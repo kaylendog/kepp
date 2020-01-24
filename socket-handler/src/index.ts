@@ -1,6 +1,6 @@
-import { Manager } from "./structures/Manager";
+import { Manager } from './Manager';
 
 const manager = new Manager({
-	token: 'the token that was here got invalidated lul'
+	token: 'NDMwNDU2MDY4NzI4OTQ2NzA4.Xiot8Q.lOE4choFjpR-sBAHhT0w-cWcre8'
 });
 manager.startShards();
