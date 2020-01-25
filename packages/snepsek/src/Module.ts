@@ -67,18 +67,15 @@ export abstract class Module extends EventEmitter {
 	 * attatched to calls this during module initialization.
 	 */
 	getCommands() {
-		const commands: Command[] = [...this.commands.values()];
-
 		for (const method of Object.getOwnPropertyNames(
 			this.constructor.prototype
 		)) {
 			const command = Reflect.getMetadata('command', this, method);
 			if (command && !this.commands.get(command.name)) {
-				commands.push(command);
 				this.commands.set(command.name, command);
 			}
 		}
-		return commands;
+		return this.commands;
 	}
 
 	/**
@@ -163,7 +160,3 @@ export const event = (name: string) => {
 		}
 	};
 };
-
-type FirstArgument<T> = T extends (arg1: infer U, ...args: any[]) => any
-	? U
-	: any;
