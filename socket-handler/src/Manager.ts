@@ -1,11 +1,6 @@
-import { AxiosResponse } from 'axios';
-import { spawnSync } from 'child_process';
-import { resolve } from 'url';
-
 import { createLogger } from '../../packages/logging/src';
 import { Shard } from './Shard';
-import { GetGatewayRequest } from './types/Requests';
-import { waitFor, waitForEvent } from './util/async';
+import { waitFor } from './util/async';
 import { RequestMaker } from './util/requests';
 
 export interface ManagerOptions {
@@ -39,6 +34,9 @@ export class Manager {
 		}
 	}
 
+	/**
+	 * The token shards will use to connect to the gateway.
+	 */
 	get token(): string {
 		return this.options.token;
 	}
@@ -47,7 +45,7 @@ export class Manager {
 	 * Start the shards.
 	 */
 	async startShards(): Promise<void> {
-		const gateway = await this.getGateway();
+		const gateway = await this.getGateway().then((d) => d.data);
 		gateway.url = `${gateway.url}/${this.options.gatewayQuery}`;
 
 		if (!gateway.url) {
@@ -63,26 +61,26 @@ export class Manager {
 		);
 
 		for (let i = 0; i < this.shardCount; i++) {
-			const shard = new Shard(i, { gateway: gateway.url });
+			const shard = new Shard(this, i, {
+				gateway: gateway.url,
+				token: this.token
+			});
 			this.shards.set(i, shard);
 
 			// Wait for shard to start
 			await shard.connect();
 			await waitFor(5e3);
 		}
+
+		this.logger.success('Started', this.shardCount, 'shards.');
 	}
 
 	/**
 	 * Make a request to the Discord API to fetch the gateway endpoint.
 	 */
 	async getGateway() {
-		return ((await RequestMaker({
-			method: 'GET',
-			url: '/gateway/bot',
+		return RequestMaker.get<{ url: string; shards: number }>('/gateway/bot', {
 			headers: { Authorization: `Bot ${this.token}` }
-		}).catch((err) => {
-			this.logger.error('Failed to resolve gateway:', err.message);
-			return { data: {} };
-		})) as AxiosResponse<GetGatewayRequest>).data;
+		});
 	}
 }
