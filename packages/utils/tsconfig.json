@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "commonjs",
+		"strict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+
+		"outDir": "dist",
+		"declaration": false,
+
+		"types": ["@types/node"]
+	},
+	"include": ["src/**/*.*"],
+	"exclude": ["node_modules"]
+}

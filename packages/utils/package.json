@@ -1,0 +1,12 @@
+{
+  "name": "object-schema",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.5.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
