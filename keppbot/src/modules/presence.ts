@@ -6,7 +6,11 @@ export class Presence extends Module {
 	presences: GamePresence[] = [
 		{ name: 'the cutest floofs', type: 3 },
 		{ name: 'the bestest boyes', type: 3 },
-		{ name: 'with my tail', type: 0 }
+		{ name: 'with my tail', type: 0 },
+		{
+			name: `;h | v${require('../../package.json').version} `,
+			type: 2
+		}
 	];
 	currentIndex = 0;
 	cycleTimeout?: NodeJS.Timeout;
