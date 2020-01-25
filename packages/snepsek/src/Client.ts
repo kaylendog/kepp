@@ -1,4 +1,4 @@
-import { Client as ErisClient, ClientOptions } from 'eris';
+import { Client as ErisClient, ClientOptions as ErisClientOptions } from 'eris';
 import { existsSync, lstatSync, readdirSync } from 'fs';
 import * as path from 'path';
 
@@ -17,6 +17,10 @@ enum ConnectionStatus {
 
 export interface ProviderSettings {}
 
+interface ClientOptions extends ErisClientOptions {}
+
+const DEFAULT_CLIENT_OPTIONS: ClientOptions = {};
+
 /**
  * Module management class.
  */
@@ -30,8 +34,11 @@ export class Client extends ErisClient {
 
 	connectionStatus: ConnectionStatus = ConnectionStatus.Disconnected;
 
-	constructor(opts: ClientOptions) {
+	readonly options: ClientOptions;
+
+	constructor(opts: Partial<ClientOptions>) {
 		super('', opts);
+		this.options = { ...DEFAULT_CLIENT_OPTIONS, ...opts };
 
 		this.logger.info(`snepsek v${require('../package.json').version}`);
 
@@ -49,7 +56,7 @@ export class Client extends ErisClient {
 		this.disconnect({ reconnect: false });
 		await this.modulesDidUnload();
 
-		this.logger.info('Done :3');
+		this.logger.info('Done.');
 		process.exit();
 	}
 
