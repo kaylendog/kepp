@@ -26,3 +26,25 @@ export const flatten = (obj: { [x: string]: any }) => {
 	}
 	return res;
 };
+
+/**
+ * Convert an object's keys and any sub-objects' keys into camelCase.
+ * @param obj
+ */
+export const camelCaseify = (obj: any) => {
+	if (typeof obj !== 'object') {
+		throw TypeError('"camelCaseify" can only be used on objects.');
+	}
+
+	let res: { [x: string]: any } = {};
+
+	for (const prop in obj) {
+		if (!obj.hasOwnProperty(prop)) {
+			continue;
+		}
+
+		if (typeof obj[prop] === 'object' && obj[prop] !== null) {
+			res = { ...res, ...flatten(obj[prop]) };
+		}
+	}
+};
