@@ -1,4 +1,4 @@
-import { DispatchHandler, EventHandler, ReadyEvent } from './types';
+import { DispatchHandler, ReadyEvent } from '../types';
 
 export const READY_EVENT: DispatchHandler<ReadyEvent> = {
 	t: 'READY',

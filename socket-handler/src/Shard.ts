@@ -61,7 +61,10 @@ export class Shard extends EventEmitter {
 		this.ws = new WebSocket(this.options.gateway, this.options.socketOptions);
 		await waitForEvent(this.ws, 'open');
 
-		this.ws.on('message', (raw) => this._handlePacket(raw));
+		this.ws
+			.on('message', (raw) => this._handlePacket(raw))
+			.on('error', (err) => this.logger.error(err))
+			.on('close', (c, r) => this.logger.warn('Socket closed:', c, '-', r));
 
 		await waitForEvent(this, 'ready');
 	}

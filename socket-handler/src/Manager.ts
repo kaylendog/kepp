@@ -69,7 +69,10 @@ export class Manager {
 
 			// Wait for shard to start
 			await shard.connect();
-			await waitFor(5e3);
+
+			if (i !== this.shardCount - 1) {
+				await waitFor(5e3);
+			}
 		}
 
 		this.logger.success('Started', this.shardCount, 'shards.');

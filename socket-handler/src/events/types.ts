@@ -1,6 +1,6 @@
 import { Shard } from '../Shard';
 
-export type EventNames = 'READY';
+export type EventNames = 'READY' | 'MESSAGE_CREATE';
 
 export interface SocketEvent {
 	d: any;
@@ -34,7 +34,23 @@ export interface ReadyEvent extends DispatchEvent {
 	t: 'READY';
 }
 
-export type DispatchEvents = ReadyEvent;
+export interface MessageEvent extends DispatchEvent {
+	t: 'MESSAGE_CREATE';
+	d: {
+		guild_id: string;
+		attachments: string[];
+		author: {
+			avatar: string;
+			discriminator: string;
+			id: string;
+			username: string;
+		};
+		channel_id: string;
+		content: '.';
+	};
+}
+
+export type DispatchEvents = ReadyEvent | MessageEvent;
 
 /**
  * Sent events
@@ -53,6 +69,7 @@ interface IdentifyCommand extends SocketEvent {
 			$browser: string;
 			$device: string;
 		};
+		shard: [number, number];
 	};
 }
 

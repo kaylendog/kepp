@@ -11,7 +11,8 @@ export const HELLO_EVENT: EventHandler<HelloEvent> = {
 			op: 2,
 			d: {
 				properties: { $browser: 'kepp', $device: 'kepp', $os: 'linux' },
-				token: shard.token
+				token: shard.token,
+				shard: [shard.id, shard.manager.shardCount]
 			}
 		});
 	}
