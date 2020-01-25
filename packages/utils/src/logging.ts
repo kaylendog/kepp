@@ -1,4 +1,4 @@
-import colors from 'colors';
+import colors from 'colors/safe';
 
 type LogLevel = 'info' | 'warning' | 'error' | 'debug' | 'success';
 

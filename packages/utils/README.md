@@ -29,6 +29,8 @@ Utility functions, classes & modules used by Kepp.
 ## Object
 
 - `flatten(obj: {})` - Take an object and break into a single level key-value map.
+- `expand(obj: {})` - Take a flattened object and restore it to a nested object.
+- `camelCaseify(obj: {})` - Convert an object's keys and any sub-objects' keys into camelCase.
 
 ```ts
 const exampleObject = { key: 'value', anotherObj: { key: 'value' } };

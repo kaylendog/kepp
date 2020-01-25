@@ -28,6 +28,39 @@ export const flatten = (obj: { [x: string]: any }) => {
 };
 
 /**
+ * Take a flattened object and restore it to a nested object.
+ * @param obj
+ */
+export const expand = (obj: any) => {
+	if (typeof obj !== 'object') {
+		throw TypeError('"expand" can only be used on objects.');
+	}
+
+	let res: { [x: string]: any } = {};
+
+	for (const prop in obj) {
+		if (prop.includes('.')) {
+			const keys = prop.split('.');
+
+			let topLevelObject: { [x: string]: any } = {};
+			let ref = topLevelObject;
+
+			keys.forEach((k, i) => {
+				if (i === keys.length - 1) {
+					ref[k] = obj[keys.pop() || ''];
+				}
+				ref[k] = {};
+				ref = ref[k];
+			});
+
+			res[keys.shift() || ''] = topLevelObject;
+		} else {
+			res[prop] = obj[prop];
+		}
+	}
+};
+
+/**
  * Convert an object's keys and any sub-objects' keys into camelCase.
  * @param obj
  */
