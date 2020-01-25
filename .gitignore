@@ -113,3 +113,5 @@ bin/
 
 dev.js
 dev.ts
+
+tests/
