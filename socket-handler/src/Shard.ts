@@ -2,14 +2,13 @@ import { pack, unpack } from 'erlpack';
 import { EventEmitter } from 'events';
 import WebSocket from 'ws';
 
-import { createLogger } from '../../packages/logging/src';
+import { createLogger, waitForEvent } from '../../utils/src';
 import { DispatchHandlers, EventHandlers } from './events/';
 import {
 	CommandTypes, DispatchEvents, DispatchHandler, EventHandler, EventNames, EventTypes,
 	SocketEvent,
 } from './events/types';
 import { Manager } from './Manager';
-import { waitForEvent } from './util/async';
 
 interface ShardOptions {
 	disabledEvents: [];
@@ -122,11 +121,6 @@ export class Shard extends EventEmitter {
 			this.ws.send(pack(cmd));
 		}
 	}
-
-	/**
-	 * Send the Hello identification
-	 */
-	private _hello() {}
 
 	/**
 	 * Send the heartbeat command to the gateway.

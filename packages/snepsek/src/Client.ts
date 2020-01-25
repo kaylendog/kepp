@@ -2,7 +2,7 @@ import { Client as ErisClient, ClientOptions as ErisClientOptions } from 'eris';
 import { existsSync, lstatSync, readdirSync } from 'fs';
 import * as path from 'path';
 
-import { Logger } from '../../logging/dist';
+import { createLogger } from '../../../utils/src';
 import { Module } from './Module';
 import { MemoryProvider } from './provider/MemoryProvider';
 import { SettingsProvider } from './provider/SettingsProvider';
@@ -26,8 +26,8 @@ const DEFAULT_CLIENT_OPTIONS: ClientOptions = {};
  */
 export class Client extends ErisClient {
 	readonly modules: Map<string, Module> = new Map();
+	readonly logger = createLogger('client');
 
-	readonly logger: Logger = new Logger('Client');
 	provider: SettingsProvider<ProviderSettings> = new MemoryProvider<
 		ProviderSettings
 	>(this);

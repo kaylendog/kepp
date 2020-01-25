@@ -1,6 +1,5 @@
-import { createLogger } from '../../packages/logging/src';
+import { createLogger, waitFor } from '../../utils/src';
 import { Shard } from './Shard';
-import { waitFor } from './util/async';
 import { RequestMaker } from './util/requests';
 
 export interface ManagerOptions {

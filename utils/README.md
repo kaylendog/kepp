@@ -4,10 +4,10 @@ Utility functions, classes & modules used by Kepp.
 
 ## Sub-modules
 
-- [`async`]() - asynchronous code methods
-- [`logging`]() - colourized, pretty foxie~ logging
-- [`object`]() - methods for working with objects
-- [`validation`]() - strongly-typed object validation
+- [`async`](#async) - asynchronous code methods
+- [`logging`](#logging) - colourized, pretty foxie~ logging
+- [`object`](#object) - methods for working with objects
+- [`validation`](#validation) - strongly-typed object validation
 
 ## async
 

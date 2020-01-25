@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Client } from 'eris';
 import { EventEmitter } from 'events';
 
-import { Logger } from '../../logging/dist';
+import { createLogger } from '../../../utils/src';
 import { Command, CommandOptions, ModuleCommandHandler } from './Command';
 
 type ModuleTask = () => void;
@@ -13,7 +13,7 @@ export abstract class Module extends EventEmitter {
 	readonly commands = new Map<string, Command>();
 	readonly groups = new Map<string, ModuleGroup>();
 	readonly tasks = new Map<string, ModuleTask>();
-	readonly logger: Logger = new Logger(this.constructor.name);
+	readonly logger = createLogger(this.constructor.name);
 
 	constructor(readonly client: Client) {
 		super();
