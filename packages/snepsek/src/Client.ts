@@ -4,8 +4,8 @@ import * as path from 'path';
 
 import { createLogger } from '../../../utils/src';
 import { Module } from './Module';
-import { MemoryProvider } from './provider/MemoryProvider';
-import { SettingsProvider } from './provider/SettingsProvider';
+import { MemoryProvider } from './providers/MemoryProvider';
+import { SettingsProvider } from './providers/SettingsProvider';
 import { waitForEvent } from './util/async';
 
 enum ConnectionStatus {

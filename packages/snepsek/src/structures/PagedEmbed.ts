@@ -1,7 +1,6 @@
 import { Emoji, Message, PossiblyUncachedMessage } from 'eris';
 
-import { Client } from '../Client';
-import { Context } from '../Context';
+import { Context } from '../commands/Context';
 
 /**
  * Represents a pageable embed.

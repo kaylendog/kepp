@@ -1,8 +1,8 @@
 import { Message, MessageContent, MessageFile } from 'eris';
 
-import { Client } from './Client';
-import { PagedEmbed, PagedEmbedPage } from './structures/PagedEmbed';
-import { ChannelTypes } from './types/Discord';
+import { Client } from '../Client';
+import { PagedEmbed, PagedEmbedPage } from '../structures/PagedEmbed';
+import { ChannelTypes } from '../types/Discord';
 
 /**
  * Wrapper class for the context in which a command is executed.
