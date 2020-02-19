@@ -1,6 +1,7 @@
 import { Message, MessageContent, MessageFile } from 'eris';
 
 import { Client } from './Client';
+import { PagedEmbed, PagedEmbedPage } from './structures/PagedEmbed';
 import { ChannelTypes } from './types/Discord';
 
 /**
@@ -56,5 +57,13 @@ export class Context {
 			{ content: `<@${this.message.author.id}>`, ...content },
 			file
 		);
+	}
+
+	/**
+	 * Create a paged embed from an array of pages, and attach it to this context.
+	 * @param pages
+	 */
+	createPagableEmbed(...pages: PagedEmbedPage[]) {
+		new PagedEmbed(this);
 	}
 }
