@@ -7,7 +7,7 @@
 	"private": true,
 	"workspaces": [
 		"frontend-react",
-    "frontend-nextjs",
+		"frontend-nextjs",
 		"backend-graphql",
 		"shared"
 	],

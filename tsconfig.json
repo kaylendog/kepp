@@ -1,0 +1,20 @@
+{
+	"extends": "./tsconfig.base.json",
+	"references": [
+		{
+			"path": "./backend-graphql"
+		},
+		{
+			"path": "./frontend-nextjs"
+		},
+		{
+			"path": "./frontend-react"
+		},
+		{
+			"path": "./shared"
+		}
+	],
+	"files": [],
+	"include": [],
+	"exclude": ["**/node_modules"]
+}
