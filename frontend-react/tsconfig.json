@@ -1,0 +1,10 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"lib": ["DOM", "DOM.Iterable"],
+		"jsx": "react",
+        "baseUrl": ".",
+		"composite": true
+	},
+	"include": ["src"]
+}
