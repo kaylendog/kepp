@@ -1,12 +1,12 @@
 {
-	"name": "@fullstack/backend",
+	"name": "@fullstack/backend-graphql",
 	"version": "0.0.0",
 	"main": "src/index.ts",
 	"author": "SkyezerFox <actuallyori@gmail.com>",
 	"license": "MIT",
 	"scripts": {
 		"start": "ts-node-dev --respawn src",
-		"prepublish": "npx prisma generate"
+		"prepare": "npx prisma generate"
 	},
 	"dependencies": {
 		"@prisma/client": "^2.25.0",
