@@ -1,0 +1,13 @@
+{
+	"recommendations": [
+		"christian-kohler.npm-intellisense",
+		"davidanson.vscode-markdownlint",
+		"dbaeumer.vscode-eslint",
+		"eg2.vscode-npm-script",
+		"mike-co.import-sorter",
+		"mikestead.dotenv",
+		"moppitz.vscode-extension-auto-import",
+		"tabnine.tabnine-vscode",
+		"waderyan.nodejs-extension-pack"
+	]
+}
