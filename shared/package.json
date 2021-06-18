@@ -1,6 +1,12 @@
 {
-	"name": "shared",
-	"version": "1.0.0",
+	"name": "@fullstack-template/shared",
+	"version": "0.0.0",
 	"main": "dist/index.js",
-	"license": "MIT"
+	"license": "MIT",
+	"scripts": {
+		"prepare": "tsc -b"
+	},
+	"devDependencies": {
+		"typescript": "^4.3.4"
+	}
 }

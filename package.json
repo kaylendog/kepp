@@ -9,10 +9,11 @@
 		"frontend-react",
 		"frontend-nextjs",
 		"backend-graphql",
+		"backend-prisma",
 		"shared"
 	],
 	"scripts": {
-		"prepare": "husky install"
+		"prepare": "husky install && yarn workspaces run prepare"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^12.1.4",

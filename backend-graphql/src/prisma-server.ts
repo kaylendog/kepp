@@ -3,11 +3,11 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
+import { Partional } from "@fullstack-template/shared";
 import { resolvers } from "@generated/type-graphql";
 import { PrismaClient } from "@prisma/client";
 
 import { DEFAULT_OPTIONS as DEFAULT_SERVER_OPTIONS, Server, ServerOptions } from "./server";
-import { Partional } from "./types";
 
 interface PrismaServerOptions extends ServerOptions {
 	enablePlayground: boolean;

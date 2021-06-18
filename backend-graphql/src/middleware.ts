@@ -2,9 +2,10 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import { Awaitable } from "@fullstack-template/shared";
+
 import { WithPrismaServer } from "./prisma-server";
 import { Server } from "./server";
-import { Awaitable } from "./types";
 
 /**
  * A generic middleware handler type.

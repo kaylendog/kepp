@@ -3,6 +3,8 @@ import { createServer } from "http";
 import { createLogger, Logger } from "winston";
 import { Console } from "winston/lib/winston/transports";
 
+import { Partional } from "@fullstack-template/shared";
+
 import {
 	defaultNotFoundHandler,
 	MiddlewareHandler as ServerHandler,
@@ -10,7 +12,6 @@ import {
 	useJsonBodyParsing,
 	useMorgan,
 } from "./middleware";
-import { Partional } from "./types";
 
 /**
  * An interface of available server options.
