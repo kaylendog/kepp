@@ -1,4 +1,4 @@
-# @fullstack-template/backend-graphql
+# @fullstack-template/backend-prisma
 
 Simple Express project with linting. Cloned from [express-template](https://github.com/SkyezerFox/express-template).
 

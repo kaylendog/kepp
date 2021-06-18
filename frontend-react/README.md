@@ -1,6 +1,6 @@
-# @fullstack-template/backend-graphql
+# @fullstack-template/frontend-react
 
-Simple Express project with linting. Cloned from [express-template](https://github.com/SkyezerFox/express-template).
+A simple frontend project powered by React, using the [`styled-components`](https://styled-components.com/) package.
 
 ## License
 
