@@ -2,13 +2,13 @@
 	"extends": "./tsconfig.base.json",
 	"references": [
 		{
-			"path": "./backend-graphql"
+			"path": "./kepp-backend"
 		},
 		{
-			"path": "./frontend-nextjs"
+			"path": "./kepp-frontend"
 		},
 		{
-			"path": "./frontend-react"
+			"path": "./kepp"
 		},
 		{
 			"path": "./shared"

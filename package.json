@@ -1,15 +1,15 @@
 {
-	"name": "fullstack-template",
+	"name": "kepp",
 	"version": "0.0.0",
 	"description": "A template for a Node-based, fullstack project.",
 	"author": "Skye Elliot <actuallyori@gmail.com>",
 	"license": "MIT",
 	"private": true,
 	"workspaces": [
-		"frontend-react",
-		"frontend-nextjs",
-		"backend-graphql",
-		"backend-prisma",
+		"kepp",
+		"kepp-backend",
+		"kepp-database",
+		"kepp-frontend",
 		"shared"
 	],
 	"scripts": {

@@ -12,6 +12,7 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @db.VarChar(24)
+  id       BigInt @id
+  username String @db.VarChar(32)
+  discriminator Int
 }

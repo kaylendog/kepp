@@ -1,5 +1,5 @@
 {
-	"name": "@fullstack-template/shared",
+	"name": "@kepp/shared",
 	"version": "0.0.0",
 	"main": "dist/index.js",
 	"license": "MIT",
