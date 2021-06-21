@@ -11,8 +11,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// a user known to the bot
 model User {
-  id       BigInt @id
-  username String @db.VarChar(32)
-  discriminator Int
+  id          BigInt      @id
+  username    String      @db.VarChar(37)
+  guilds      Guild[]
+  client_user ClientUser?
+}
+
+// a user known to the panel
+model ClientUser {
+  id           BigInt       @unique
+  username     String       @db.VarChar(37)
+  user         User         @relation(fields: [id], references: [id])
+  access_token AccessToken?
+}
+
+// a discord access token used for OAuth
+model AccessToken {
+  id             Int        @id @default(autoincrement())
+  client_user_id BigInt
+  client_user    ClientUser @relation(fields: [client_user_id], references: [id])
+  active         Boolean
+  valid_until    DateTime
+  // discord jwt
+  access_token   String
+  // kepp jwt
+  content        String
+}
+
+// a guild known to the bot
+model Guild {
+  id        BigInt         @id
+  name      String         @db.VarChar(32)
+  users     User[]
+  settings  GuildSettings?
+  is_joined Boolean
+}
+
+// collection of settings for a guild the bot has joined
+model GuildSettings {
+  id     BigInt @unique
+  guild  Guild  @relation(fields: [id], references: [id])
+  prefix String @db.VarChar(4)
 }
