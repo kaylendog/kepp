@@ -4,4 +4,7 @@ module.exports = {
 	env: {
 		browser: true,
 	},
+	rules: {
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+	},
 };
