@@ -9,7 +9,7 @@ import { Console } from "winston/lib/winston/transports";
 import { KeppDbClient } from "@kepp/database";
 import { Partional } from "@kepp/shared";
 
-import { DEFAULT_MIDDLEWARE, defaultNotFoundHandler } from "./middleware";
+import { DEFAULT_MIDDLEWARE, defaultNotFoundHandler as useDefaultNotFoundHandler } from "./middleware";
 
 interface ServerOptions {
 	level: string;
@@ -92,9 +92,10 @@ export class KeppServer {
 	 */
 	async listen(): Promise<void> {
 		// setup prisma
+		this.setupMiddleware();
 		await this.setupDatabase();
 		// add default not found handler
-		this.express.use(defaultNotFoundHandler);
+		useDefaultNotFoundHandler(this);
 		// start listening on port specified in options.
 		this.logger.info("Listening on port " + this.options.port);
 		this.http.listen(this.options.port);

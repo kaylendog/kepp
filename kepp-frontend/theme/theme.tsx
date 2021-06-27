@@ -10,7 +10,6 @@ import { LIGHT_THEME } from "./light";
 export const ThemeProvider: React.FC = ({ children }) => {
 	const state = useSelector(selectTheme);
 	const theme = state == Theme.Light ? LIGHT_THEME : DARK_THEME;
-
 	// return theme provider
 	return (
 		<StyledThemeProvider theme={theme}>

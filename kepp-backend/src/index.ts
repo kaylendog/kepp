@@ -5,4 +5,4 @@ import { KeppServer } from "./server";
 // configure environment
 config();
 
-new KeppServer().listen();
+new KeppServer({ level: "silly", enablePlayground: true }).listen();

@@ -5,5 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"prepare": "echo No preparation needed!"
+	},
+	"dependencies": {
+		"discord.js": "^12.5.3"
 	}
 }

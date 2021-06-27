@@ -10,7 +10,8 @@
 		"kepp-backend",
 		"kepp-database",
 		"kepp-frontend",
-		"shared"
+		"shared",
+		"vixie"
 	],
 	"scripts": {
 		"prepare": "husky install && yarn workspaces run prepare"
@@ -29,6 +30,7 @@
 	},
 	"lint-staged": {
 		"*.{js,ts,tsx}": "eslint --cache --fix",
-		"*.{js,ts,tsx,css,md}": "prettier --write"
+		"*.{js,ts,tsx,css,md}": "prettier --write",
+		"*.schema": "npx prisma format"
 	}
 }
