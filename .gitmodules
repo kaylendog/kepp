@@ -1,6 +1,3 @@
-[submodule "kepp/libs/vixie"]
-	path = kepp/libs/vixie
-	url = https://github.com/SkyezerFox/vixie
 [submodule "vixie"]
 	path = vixie
 	url = https://github.com/SkyezerFox/vixie
