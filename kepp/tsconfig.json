@@ -1,4 +1,11 @@
 {
 	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"baseUrl": ".",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	},
+	"references": [{ "path": "../vixie" }],
 	"include": ["src"]
 }

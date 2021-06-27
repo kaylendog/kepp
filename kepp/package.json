@@ -1,10 +1,13 @@
 {
 	"name": "@kepp/bot",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "dist/index.js",
 	"license": "MIT",
 	"scripts": {
-		"prepare": "echo No preparation needed!"
+		"prepare": "echo No preparation needed!",
+		"dev": "ts-node-dev --respawn src",
+		"build": "tsc -b",
+		"start": "node ."
 	},
 	"dependencies": {
 		"discord.js": "^12.5.3"
