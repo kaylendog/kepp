@@ -79,7 +79,7 @@ model ArchiveSettings {
   guild            GuildSettings     @relation(fields: [id], references: [id])
   archivedChannels ArchivedChannel[]
   archivedMessages ArchivedMessage[]
-  enabled Boolean
+  enabled          Boolean
 }
 
 model ArchivedChannel {
