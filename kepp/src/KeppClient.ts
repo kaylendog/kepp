@@ -4,7 +4,7 @@ import { Utility } from "./modules/utility";
 
 export class KeppClient extends VixieClient {
 	constructor() {
-		super({ loggerPrefix: "kepp" });
+		super({ loggerPrefix: "kepp", prefix: "!" });
 		// set logger level
 		this.logger.level = "debug";
 		// register modules

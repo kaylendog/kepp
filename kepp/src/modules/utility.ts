@@ -8,6 +8,6 @@ export class Utility extends Module {
 
 	@ModuleCommand({ name: "hello", aliases: [] })
 	hello(ctx: Context): void {
-		ctx.reply("Hi!s");
+		ctx.reply("Hi!");
 	}
 }
