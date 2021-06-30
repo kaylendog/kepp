@@ -47,6 +47,7 @@ model Guild {
   users     User[]
   settings  GuildSettings?
   is_joined Boolean
+
 }
 
 // collection of settings for a guild the bot has joined
@@ -54,4 +55,48 @@ model GuildSettings {
   id     BigInt @unique
   guild  Guild  @relation(fields: [id], references: [id])
   prefix String @db.VarChar(4)
+
+  trello  GuildTrelloIntegration?
+  archive ArchiveSettings?
+}
+
+///
+/// Integration Models
+///
+
+model GuildTrelloIntegration {
+  id    BigInt        @id
+  guild GuildSettings @relation(fields: [id], references: [id])
+  key   String
+  token String
+}
+
+///
+/// Archive Module
+///
+model ArchiveSettings {
+  id               BigInt            @unique
+  guild            GuildSettings     @relation(fields: [id], references: [id])
+  archivedChannels ArchivedChannel[]
+  archivedMessages ArchivedMessage[]
+  enabled Boolean
+}
+
+model ArchivedChannel {
+  id       BigInt            @unique
+  guild_id BigInt
+  settings ArchiveSettings   @relation(fields: [guild_id], references: [id])
+  name     String            @db.VarChar(32)
+  topic    String            @db.Text
+  messages ArchivedMessage[]
+}
+
+model ArchivedMessage {
+  id         BigInt           @id
+  guild_id   BigInt
+  settings   ArchiveSettings  @relation(fields: [guild_id], references: [id])
+  channel_id BigInt
+  channel    ArchivedChannel? @relation(fields: [channel_id], references: [id])
+  author_id  BigInt
+  content    String
 }
